@@ -20,12 +20,12 @@ public class User {
     private List<Post> posts;
     private List<String> pictures;
     private List<FriendRequest> friendRequests;
-    private List<User> friends;
+    private List<String> friends;
 
-    private boolean privateAccount;
+    private Boolean privateAccount;
 
 
-    public User(String username, String password, String email, String name, String surname, LocalDate birthDate, Gender gender, Role role, String profilePicture, List<Post> posts, List<String> pictures, List<FriendRequest> friendRequests, List<User> friends, boolean privateAccount) {
+    public User(String username, String password, String email, String name, String surname, LocalDate birthDate, Gender gender, Role role, String profilePicture, List<Post> posts, List<String> pictures, List<FriendRequest> friendRequests, List<String> friends, Boolean privateAccount) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -42,7 +42,7 @@ public class User {
         this.privateAccount = privateAccount;
     }
 
-    public User(String username, String password, String email, String name, String surname, LocalDate birthDate, Gender gender, Role role, boolean privateAccount) {
+    public User(String username, String password, String email, String name, String surname, LocalDate birthDate, Gender gender, Role role, String profilePicture, Boolean privateAccount) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -51,6 +51,7 @@ public class User {
         this.birthDate = birthDate;
         this.gender = gender;
         this.role = role;
+        this.profilePicture = profilePicture;
         this.privateAccount = privateAccount;
         this.posts = new ArrayList<>();
         this.pictures = new ArrayList<>();
@@ -155,19 +156,19 @@ public class User {
         this.friendRequests = friendRequests;
     }
 
-    public List<User> getFriends() {
+    public List<String> getFriends() {
         return friends;
     }
 
-    public void setFriends(List<User> friends) {
+    public void setFriends(List<String> friends) {
         this.friends = friends;
     }
 
-    public boolean getPrivateAccount() {
+    public Boolean getPrivateAccount() {
         return privateAccount;
     }
 
-    public void setPrivateAccount(boolean privateAccount) {
+    public void setPrivateAccount(Boolean privateAccount) {
         this.privateAccount = privateAccount;
     }
 

@@ -1,53 +1,93 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Comment {
-    private User user;
-    private LocalDate date;
-    private LocalDate dateChanged;
+    private Integer id;
+    private String user;
+    private Integer post;
+    private String text;
+    private LocalDateTime date;
+    private LocalDateTime dateChanged;
+    private Boolean deleted;
 
-    public Comment(User user) {
+    public Comment(Integer id, String user, Integer post, String text, LocalDateTime date, LocalDateTime dateChanged, Boolean deleted) {
+        this.id = id;
         this.user = user;
-        this.date = LocalDate.now();
-    }
-
-    public Comment(User user, LocalDate date, LocalDate dateChanged) {
-        this.user = user;
+        this.post = post;
+        this.text = text;
         this.date = date;
         this.dateChanged = dateChanged;
+        this.deleted = deleted;
     }
 
-    public User getUser() {
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(String user) {
         this.user = user;
     }
 
-    public LocalDate getDate() {
+    public Integer getPost() {
+        return post;
+    }
+
+    public void setPost(Integer post) {
+        this.post = post;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
-    public LocalDate getDateChanged() {
+    public LocalDateTime getDateChanged() {
         return dateChanged;
     }
 
-    public void setDateChanged(LocalDate dateChanged) {
+    public void setDateChanged(LocalDateTime dateChanged) {
         this.dateChanged = dateChanged;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Override
     public String toString() {
         return "Comment{" +
-                "user=" + user +
+                "id=" + id +
+                ", user=" + user +
+                ", post=" + post +
+                ", text='" + text + '\'' +
                 ", date=" + date +
                 ", dateChanged=" + dateChanged +
+                ", deleted=" + deleted +
                 '}';
     }
 }

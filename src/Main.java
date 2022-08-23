@@ -8,13 +8,17 @@ import java.io.File;
 import java.io.IOException;
 import java.security.Key;
 
+import dao.Repository;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
 public class Main {
 	static Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
+	static Repository repository = new Repository();
+
 	public static void main(String[] args) throws IOException {
+		repository.load();
 		port(8000);
 		
 		staticFiles.externalLocation(new File("./static").getCanonicalPath());

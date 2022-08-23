@@ -3,40 +3,41 @@ package model;
 import enums.FriendRequestStatus;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class FriendRequest {
-    private User sender;
-    private User receiver;
+    private String sender;
+    private String receiver;
     private FriendRequestStatus status;
-    private LocalDate date;
+    private LocalDateTime date;
 
-    public FriendRequest(User sender, User receiver) {
+    public FriendRequest(String sender, String receiver) {
         this.sender = sender;
         this.receiver = receiver;
         this.status = FriendRequestStatus.WAIT;
-        this.date = LocalDate.now();
+        this.date = LocalDateTime.now();
     }
 
-    public FriendRequest(User sender, User receiver, FriendRequestStatus status, LocalDate date) {
+    public FriendRequest(String sender, String receiver, FriendRequestStatus status, LocalDateTime date) {
         this.sender = sender;
         this.receiver = receiver;
         this.status = status;
         this.date = date;
     }
 
-    public User getSender() {
+    public String getSender() {
         return sender;
     }
 
-    public void setSender(User sender) {
+    public void setSender(String sender) {
         this.sender = sender;
     }
 
-    public User getReceiver() {
+    public String getReceiver() {
         return receiver;
     }
 
-    public void setReceiver(User receiver) {
+    public void setReceiver(String receiver) {
         this.receiver = receiver;
     }
 
@@ -48,11 +49,11 @@ public class FriendRequest {
         this.status = status;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
