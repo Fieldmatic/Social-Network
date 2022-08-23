@@ -1,6 +1,5 @@
-package models;
+package model;
 
-import enums.AccountType;
 import enums.Gender;
 import enums.Role;
 
@@ -22,10 +21,11 @@ public class User {
     private List<String> pictures;
     private List<FriendRequest> friendRequests;
     private List<User> friends;
-    private AccountType accountType;
+
+    private boolean privateAccount;
 
 
-    public User(String username, String password, String email, String name, String surname, LocalDate birthDate, Gender gender, Role role, String profilePicture, List<Post> posts, List<String> pictures, List<FriendRequest> friendRequests, List<User> friends, AccountType accountType) {
+    public User(String username, String password, String email, String name, String surname, LocalDate birthDate, Gender gender, Role role, String profilePicture, List<Post> posts, List<String> pictures, List<FriendRequest> friendRequests, List<User> friends, boolean privateAccount) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -39,10 +39,10 @@ public class User {
         this.pictures = pictures;
         this.friendRequests = friendRequests;
         this.friends = friends;
-        this.accountType = accountType;
+        this.privateAccount = privateAccount;
     }
 
-    public User(String username, String password, String email, String name, String surname, LocalDate birthDate, Gender gender, Role role, AccountType accountType) {
+    public User(String username, String password, String email, String name, String surname, LocalDate birthDate, Gender gender, Role role, boolean privateAccount) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -51,7 +51,7 @@ public class User {
         this.birthDate = birthDate;
         this.gender = gender;
         this.role = role;
-        this.accountType = accountType;
+        this.privateAccount = privateAccount;
         this.posts = new ArrayList<>();
         this.pictures = new ArrayList<>();
         this.friendRequests = new ArrayList<>();
@@ -163,12 +163,12 @@ public class User {
         this.friends = friends;
     }
 
-    public AccountType getAccountType() {
-        return accountType;
+    public boolean getPrivateAccount() {
+        return privateAccount;
     }
 
-    public void setAccountType(AccountType accountType) {
-        this.accountType = accountType;
+    public void setPrivateAccount(boolean privateAccount) {
+        this.privateAccount = privateAccount;
     }
 
     @Override
@@ -187,7 +187,7 @@ public class User {
                 ", pictures=" + pictures +
                 ", friendRequests=" + friendRequests +
                 ", friends=" + friends +
-                ", accountType=" + accountType +
+                ", privateAccount=" + privateAccount +
                 '}';
     }
 }
