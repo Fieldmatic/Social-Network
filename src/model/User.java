@@ -59,6 +59,10 @@ public class User {
         this.friends = new ArrayList<>();
     }
 
+    public User() {
+
+    }
+
 
     public String getUsername() {
         return username;
@@ -190,5 +194,9 @@ public class User {
                 ", friends=" + friends +
                 ", privateAccount=" + privateAccount +
                 '}';
+    }
+
+    public String toRow() {
+        return username+","+password+","+email+","+name+","+surname+","+birthDate+","+gender+","+role+","+profilePicture+","+privateAccount;
     }
 }

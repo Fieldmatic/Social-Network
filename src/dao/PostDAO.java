@@ -37,20 +37,7 @@ public class PostDAO {
         } else {
             System.out.println("File not found");
         }
-       // loadPostsForUsers();
     }
-
-   /* private void loadPostsForUsers() {
-        for (User user : userDAO.users) {
-            List<Post> userPosts = new ArrayList<>();
-            for (Post post : posts) {
-                if (user.getUsername().equals(post.getUser().getUsername())) {
-                    userPosts.add(post);
-                }
-            }
-            user.setPosts(userPosts);
-        }
-    }*/
 
     private Post getPostFromRow(String[] row) {
         Integer id = Integer.valueOf(row[0]);

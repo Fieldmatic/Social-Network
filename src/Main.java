@@ -11,21 +11,21 @@ import java.security.Key;
 import dao.Repository;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import services.Authentication;
 
 public class Main {
 	static Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
 	static Repository repository = new Repository();
+	static Authentication authentication = new Authentication(repository);
 
 	public static void main(String[] args) throws IOException {
 		repository.load();
 		port(8000);
 		
 		staticFiles.externalLocation(new File("./static").getCanonicalPath());
-		
-		get("/rest/demo/test", (req, res) -> {
-			return "Works";
-		});
+
+		authentication.init();
 		
 
 	}

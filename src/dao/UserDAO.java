@@ -1,15 +1,14 @@
 package dao;
 
+import dto.LoginDTO;
+import dto.RegistrationDTO;
 import enums.Gender;
 import enums.Role;
 import model.FriendRequest;
 import model.Post;
 import model.User;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -38,6 +37,22 @@ public class UserDAO {
         }
     }
 
+    public void serialize(){
+        try {
+            StringBuilder inputBuffer = new StringBuilder();
+            inputBuffer.append("username,password,email,name,surname,birthDate,gender,role,profilePicture,privateAccount\n");
+            for(User user : users) {
+                inputBuffer.append(user.toRow());
+                inputBuffer.append("\n");
+            }
+            FileOutputStream fileOut = new FileOutputStream("data/csv/User.csv");
+            fileOut.write(inputBuffer.toString().getBytes());
+            fileOut.close();
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+    }
+
     public User getUserFromRow(String[] row) {
         String username = row[0];
         String password = row[1];
@@ -53,11 +68,41 @@ public class UserDAO {
         return new User(username,password,email,name,surname,birthDate,gender,role,profilePicture,privateAccount);
     }
 
+    public User dtoToUser(RegistrationDTO dto) {
+        User user = new User();
+        user.setUsername(dto.getUsername());
+        user.setPassword(dto.getPassword());
+        user.setName(dto.getName());
+        user.setSurname(dto.getSurname());
+        user.setBirthDate(LocalDate.parse(dto.getBirthDate(),DateTimeFormatter.ofPattern("yyyy.MM.dd")));
+        user.setEmail(dto.getEmail());
+        user.setRole(Role.USER);
+        user.setProfilePicture(dto.getProfilePicture());
+        user.setGender(Gender.valueOf(dto.getGender()));
+        user.setPrivateAccount(dto.getPrivateAccount());
+        return user;
+
+    }
+
     public User getUserByUsername(String username) {
         for(User u : users) {
             if (u.getUsername().equals(username)) return u;
         }
         return null;
+    }
+
+    public boolean validCredentials(LoginDTO dto) {
+        for (User user : users) {
+            if (user.getUsername().equals(dto.getUsername()) && user.getPassword().equals(dto.getPassword())) return true;
+        }
+        return false;
+    }
+
+    public boolean credentialsAvailable(RegistrationDTO dto) {
+        for (User user : users) {
+            if (user.getUsername().equals(dto.getUsername()) || user.getEmail().equals(dto.getEmail())) return false;
+        }
+        return true;
     }
 
 
