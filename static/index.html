@@ -9,8 +9,14 @@
 </head>
 
 <body>
-    <div id = "socialNetwork">
-        <router-view></router-view>
+    <div>
+        <form id="login" v-on:submit="login">
+        <input type="text" v-model="user.username" placeholder="Enter username:"/> <br />
+
+        <input type="text" v-model="user.password" placeholder="Enter password:"/> <br />
+
+        <button type="submit">Login</button>
+        </form>
     </div>
 
 
@@ -21,7 +27,7 @@
     <script src='jsLibs/toast.js'></script>
     <script src='vue/bar.js'></script>
     <script src='vue/router.js'></script>
-    <script src='vue/homePage.js'></script>
+    <script src='app/login.js'></script>
 
 </body>
 

@@ -40,15 +40,28 @@ public class Authentication {
 
             post("/login", (req,res) -> {
                String reqBody = req.body();
+               res.type("application/json");
+
                LoginDTO loginDTO = gson.fromJson(reqBody,LoginDTO.class);
+               //iz reqest-a izvlacim sesiju, ako je nema - napravi je
                Session ss = req.session(true);
                User user = ss.attribute("user");
-               if (repo.getUserDAO().validCredentials(loginDTO) && user == null) {
+
+               if (user != null) {
+                   res.status(403);
+                   res.body("The user is already logged in!");
+                   return res.body();
+               }
+               else if (repo.getUserDAO().validCredentials(loginDTO)) {
                    user = repo.getUserDAO().getUserByUsername(loginDTO.getUsername());
                    ss.attribute("user",user);
-                   return HttpStatus.ACCEPTED_202;
+                   return gson.toJson(user);
                }
-               else return HttpStatus.FORBIDDEN_403;
+               else {
+                   res.status(403);
+                   res.body("Wrong username or password");
+                   return res.body();
+               }
             });
 
             get("/logout",(req,res) -> {
