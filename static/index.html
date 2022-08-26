@@ -4,20 +4,44 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Twitter</title>
-
+    <link rel="stylesheet" href="bootstrap-5.1.3-dist/css/bootstrap.css">
 
 </head>
 
-<body>
+<body background="images/social-network.jpg">
     <div>
-        <form id="login" v-on:submit="login">
-        <input type="text" v-model="user.username" placeholder="Enter username:"/> <br />
 
-        <input type="text" v-model="user.password" placeholder="Enter password:"/> <br />
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-4 bg-dark my-5 p-4 rounded-3">
+                    <form id="login" action="" v-on:submit="login">
+                        <div class="text-center text-light mb-5">
+                            <h2>Sign in</h2>
+                        </div>
 
-        <button type="submit">Login</button>
-        </form>
+                        <div class="form-floating mb-4">
+                            <input type="username" v-model="user.username" id="username" placeholder="Username" class="form-control"/>
+                            <label for="username" class="form-label">Username</label>
+                        </div>
+
+                        <div class="form-floating mb-5">
+                            <input type="password" v-model="user.password" id="password" placeholder="Password" class="form-control"/>
+                            <label for="password" class="form-label">Password</label>
+                        </div>
+
+                        <div class="d-flex">
+                            <button type="submit" class="btn btn-light text-dark me-auto align-self-baseline">Login</button>
+                            <div class="align-self-baseline">
+                                <p class="text-light">You do not have an account?<a href="#" class="pe-auto text-primary ps-1">Sign up</a></p>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+
 
 
     <script src='jsLibs/vue.js'></script>
@@ -25,6 +49,7 @@
     <script src='jsLibs/axios.js'></script>
     <script src='jsLibs/jquery.min.js'></script>
     <script src='jsLibs/toast.js'></script>
+    <script src="bootstrap-5.1.3-dist/js/bootstrap.js"></script>
     <script src='vue/bar.js'></script>
     <script src='vue/router.js'></script>
     <script src='app/login.js'></script>
