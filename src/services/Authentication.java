@@ -43,7 +43,6 @@ public class Authentication {
                res.type("application/json");
 
                LoginDTO loginDTO = gson.fromJson(reqBody,LoginDTO.class);
-               //iz reqest-a izvlacim sesiju, ako je nema - napravi je
                Session ss = req.session(true);
                User user = ss.attribute("user");
 

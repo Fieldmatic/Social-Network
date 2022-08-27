@@ -12,12 +12,15 @@ import dao.Repository;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import services.Authentication;
+import services.Post;
 
 public class Main {
 	static Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
 	static Repository repository = new Repository();
 	static Authentication authentication = new Authentication(repository);
+
+	static Post post = new Post(repository);
 
 	public static void main(String[] args) throws IOException {
 		repository.load();
@@ -26,6 +29,7 @@ public class Main {
 		staticFiles.externalLocation(new File("./static").getCanonicalPath());
 
 		authentication.init();
+		post.init();
 		
 
 	}
