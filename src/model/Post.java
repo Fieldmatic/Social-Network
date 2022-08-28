@@ -79,4 +79,8 @@ public class Post {
                 ", deleted=" + deleted +
                 '}';
     }
+
+    public String toRow() {
+        return id + "," + user + "," + picture + "," + text + "," + deleted;
+    }
 }
