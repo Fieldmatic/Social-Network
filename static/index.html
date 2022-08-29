@@ -11,74 +11,77 @@
 <body background="images/social-network.jpg">
     <div>
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-4 bg-dark my-5 p-4 rounded-3">
-                    <form id="login" action="" v-on:submit="login">
-                        <div v-if="registered" class="text-center text-light mb-5">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-md-4 my-5 p-4 rounded-3" style="background: #3F729B">
+                    <div class="position-absolute top-0 start-50 translate-middle-x p-3" style="z-index: 11">
+                        <div id="liveToast" class="toast hide align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true"></div>
+                    </div>
+                    <form id="login">
+                        <div v-if="registered" class="text-center text-light mb-4">
                             <h2>Log In</h2>
                         </div>
 
-                        <div v-else class="text-center text-light mb-5">
-                            <h2>Register</h2>
+                        <div v-else class="text-center text-light mb-4">
+                            <h2>Registration</h2>
                         </div>
 
-                        <div class="form-floating mb-4">
-                            <input type="text" v-model="user.username" id="username" placeholder="Username" class="form-control"/>
+                        <div class="form-floating mb-3 text-dark">
+                            <input type="text" v-model="user.username" id="username" placeholder="Username" class="form-control" required/>
                             <label for="username" class="form-label">Username</label>
                         </div>
 
-                        <div v-if="!registered" class="row justify-content-center mb-4">
-                            <div class="col-md-6 bg-dark rounded-3">
+                        <div v-if="!registered" class="row justify-content-center mb-3">
+                            <div class="col-md-6 rounded-3">
                                 <div class="form-floating">
-                                    <input type="text" v-model="user.name" id="name" placeholder="Name" class="form-control"/>
+                                    <input type="text" v-model="user.name" id="name" placeholder="Name" class="form-control" required/>
                                     <label for="name" class="form-label">Name</label>
                                 </div>
                             </div>
-                            <div class="col-md-6 bg-dark rounded-3">
+                            <div class="col-md-6 rounded-3">
                                 <div class="form-floating">
-                                    <input type="text" v-model="user.surname" id="surname" placeholder="Surname" class="form-control"/>
+                                    <input type="text" v-model="user.surname" id="surname" placeholder="Surname" class="form-control" required/>
                                     <label for="surname" class="form-label">Surname</label>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="form-floating mb-4">
-                            <input type="password" v-model="user.password" id="password" placeholder="Password" class="form-control"/>
+                        <div class="form-floating mb-3">
+                            <input type="password" v-model="user.password" id="password" placeholder="Password" class="form-control" required/>
                             <label for="password" class="form-label">Password</label>
                         </div>
 
                         <div v-if="!registered">
-                            <div class="form-floating mb-4">
-                                <input type="password" v-model="user.passwordConfirm" id="passwordConfirm" placeholder="Confirm password" class="form-control"/>
+                            <div class="form-floating mb-3">
+                                <input type="password" v-model="user.passwordConfirm" id="passwordConfirm" placeholder="Confirm password" class="form-control" required/>
                                 <label for="passwordConfirm" class="form-label">Confirm password</label>
                             </div>
 
-                            <div class="form-floating mb-4">
-                                <input type="text" v-model="user.email" id="email" placeholder="Email address" class="form-control"/>
+                            <div class="form-floating mb-3">
+                                <input type="text" v-model="user.email" id="email" placeholder="Email address" class="form-control" required/>
                                 <label for="email" class="form-label">Email address</label>
                             </div>
 
-                            <div class="form-floating mb-4">
-                                <input type="date" v-model="user.birthDate" class="form-control d-inline" id="birthday" placeholder="Birthday" name="birthday" required>
+                            <div class="form-floating mb-3">
+                                <input type="date" v-model="user.birthDate" class="form-control d-inline" id="birthday" name="birthday" required>
                                 <label for="birthday">Date of Birth</label>
                             </div>
 
-                            <div class="form-check form-check-inline text-light mb-5">
-                                <input class="form-check-input" type="radio" name="gender" id="female" @change="onChange($event)" value="FEMALE">
+                            <div class="form-check form-check-inline text-light mb-4">
+                                <input class="form-check-input" type="radio" name="gender" id="female" @change="onChange($event)" value="FEMALE" required checked>
                                 <label class="form-check-label" for="female">Female</label>
                             </div>
                             <div class="form-check form-check-inline text-light">
-                                <input class="form-check-input" type="radio" name="gender" id="male" @change="onChange($event)" value="MALE">
+                                <input class="form-check-input" type="radio" name="gender" id="male" @change="onChange($event)" value="MALE" required>
                                 <label class="form-check-label" for="male">Male</label>
                             </div>
                         </div>
 
                         <div class="d-flex">
-                            <button v-if="registered" type="submit" class="btn btn-light text-dark me-auto align-self-baseline">Log In</button>
-                            <button v-else type="submit" class="btn btn-light text-dark me-auto align-self-baseline">Sign Up</button>
+                            <button v-if="registered" type="button" class="btn btn-light text-dark fw-bold me-auto align-self-baseline" v-on:click="login">Log In</button>
+                            <button v-else type="button" class="btn btn-light text-dark fw-bold me-auto align-self-baseline" v-on:click="login">Sign Up</button>
                             <div class="align-self-baseline ms-auto">
-                                <p v-if="registered" class="text-light">You do not have an account?<a href="#/" class="pe-auto text-primary ps-1" v-on:click="changeSignUpScreen">Sign Up</a></p>
-                                <p v-else class="text-light">You already have an account?<a href="#/" class="pe-auto text-primary ps-1" v-on:click="changeSignUpScreen">Log In</a></p>
+                                <p v-if="registered" class="text-light">You do not have an account?<a href="#/" class="pe-auto text-dark fw-bold ps-1" v-on:click="changeSignUpScreen">Sign Up</a></p>
+                                <p v-else class="text-light">You already have an account?<a href="#/" class="pe-auto text-dark fw-bold ps-1" v-on:click="changeSignUpScreen">Log In</a></p>
                             </div>
                         </div>
                     </form>
