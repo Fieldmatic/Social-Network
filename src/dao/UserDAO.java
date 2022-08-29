@@ -12,7 +12,9 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class UserDAO {
     public List<User> users;
@@ -82,6 +84,22 @@ public class UserDAO {
         user.setPrivateAccount(dto.getPrivateAccount());
         return user;
 
+    }
+
+    public List<User> search(String name, String surname, String startDateText, String endDateText){
+        List<User> result = new ArrayList<>();
+        LocalDate startDate = startDateText.isEmpty() ? null :  LocalDate.parse(startDateText,DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate endDate = endDateText.isEmpty() ? null : LocalDate.parse(endDateText, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        for (User user : users) {
+            if (
+                    (user.getName().equalsIgnoreCase(name) || name.isEmpty())
+                && (user.getSurname().equalsIgnoreCase(surname) || surname.isEmpty())
+                && (startDate == null || user.getBirthDate().isAfter(startDate))
+                && (endDate == null || user.getBirthDate().isBefore(endDate))
+               )
+                result.add(user);
+        }
+        return result;
     }
 
     public User getUserByUsername(String username) {
