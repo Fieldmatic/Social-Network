@@ -27,14 +27,20 @@ public class Authentication {
 
             post("/register", (req,res) -> {
                 String reqBody = req.body();
+                res.type("application/json");
+
                 RegistrationDTO registrationDTO = gson.fromJson(reqBody, RegistrationDTO.class);
                 User newUser = repo.getUserDAO().dtoToUser(registrationDTO);
                 if (repo.getUserDAO().credentialsAvailable(registrationDTO)) {
                     repo.getUserDAO().users.add(newUser);
                     repo.getUserDAO().serialize();
-                    return HttpStatus.OK_200;
+                    return gson.toJson(newUser);
                 }
-                else return HttpStatus.NOT_ACCEPTABLE_406;
+                else {
+                    res.status(406);
+                    res.body("Username or email already taken.");
+                    return res.body();
+                }
             });
 
 
