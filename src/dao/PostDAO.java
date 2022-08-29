@@ -76,4 +76,15 @@ public class PostDAO {
         }
         return null;
     }
+
+    public List<Post> getUserFeedPosts(User user) {
+        ArrayList<Post> postsForUserFeed = new ArrayList<>();
+        for (Post post: posts) {
+            User postOwner = this.userDAO.getUserByUsername(post.getUser());
+            if (user.getFriends().contains(post.getUser()) || !postOwner.getPrivateAccount()) {
+                postsForUserFeed.add(post);
+            }
+        }
+        return postsForUserFeed;
+    }
 }

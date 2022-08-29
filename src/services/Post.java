@@ -5,15 +5,16 @@ import com.google.gson.GsonBuilder;
 import dao.Repository;
 import dto.NewPostDTO;
 import model.User;
+import org.eclipse.jetty.http.HttpStatus;
 import spark.Session;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Base64;
 
-import static spark.Spark.path;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 public class Post {
     private final Repository repo;
@@ -58,6 +59,19 @@ public class Post {
                 return res.body();
             });
 
+            get("/getUserFeedPosts", (req, res) -> {
+                res.type("application/json");
+                Session ss = req.session(true);
+                User user = ss.attribute("user");
+                if (user != null) {
+                    return gson.toJson(this.repo.getPostDAO().getUserFeedPosts(user));
+                }
+                else {
+                    res.status(401);
+                    res.body("User is not logged in !");
+                    return res.body();
+                }
+            });
         });
     }
 }
