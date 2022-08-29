@@ -12,7 +12,10 @@ Vue.component('navbar', {
                       <a class="nav-link" href="#">Your profile</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">Friends</a>
+                      <a class="nav-link" href="#/friendList">Friends</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#/friendRequests">Friend requests</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="#/search">Search</a>

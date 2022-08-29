@@ -102,6 +102,14 @@ public class UserDAO {
         return result;
     }
 
+    public List<model.User> getFriendRequestSenders(List<FriendRequest> requests) {
+        List<model.User> senders = new ArrayList<>();
+        for (FriendRequest request : requests) {
+            senders.add(getUserByUsername(request.getSender()));
+        }
+        return senders;
+    }
+
     public User getUserByUsername(String username) {
         for(User u : users) {
             if (u.getUsername().equals(username)) return u;

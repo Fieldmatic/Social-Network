@@ -66,4 +66,8 @@ public class FriendRequest {
                 ", date=" + date +
                 '}';
     }
+
+    public String toRow() {
+        return sender + "," + receiver + "," + status + "," + date;
+    }
 }

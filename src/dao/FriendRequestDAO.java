@@ -5,10 +5,7 @@ import model.FriendRequest;
 import model.Post;
 import model.User;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -42,11 +39,68 @@ public class FriendRequestDAO {
         }
     }
 
+    public void serialize(){
+        try {
+            StringBuilder inputBuffer = new StringBuilder();
+            inputBuffer.append("senderId,receiverId,status,date\n");
+            for(FriendRequest friendRequest : friendRequests) {
+                inputBuffer.append(friendRequest.toRow());
+                inputBuffer.append("\n");
+            }
+            FileOutputStream fileOut = new FileOutputStream("data/csv/FriendRequest.csv");
+            fileOut.write(inputBuffer.toString().getBytes());
+            fileOut.close();
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+    }
+
+    public boolean acceptRequest(String sender, String receiver) {
+        for (FriendRequest request: friendRequests) {
+            if ((request.getSender().equals(sender)) && (request.getReceiver().equals(receiver)) && (request.getStatus().equals(FriendRequestStatus.WAIT)))
+            {
+                request.setStatus(FriendRequestStatus.ACCEPTED);
+                serialize();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean rejectRequest(String sender, String receiver) {
+        for (FriendRequest request: friendRequests) {
+            if ((request.getSender().equals(sender)) && (request.getReceiver().equals(receiver)) && (request.getStatus().equals(FriendRequestStatus.WAIT)))
+            {
+                request.setStatus(FriendRequestStatus.REJECTED);
+                serialize();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<User> getFriendsForUser(User user) {
+        List<model.User> friends = new ArrayList<>();
+        for (FriendRequest friendRequest : friendRequests) {
+            if (user.getUsername().equals(friendRequest.getReceiver()) && friendRequest.getStatus() == FriendRequestStatus.ACCEPTED) friends.add(userDAO.getUserByUsername(friendRequest.getSender()));
+            if (user.getUsername().equals(friendRequest.getSender()) && friendRequest.getStatus() == FriendRequestStatus.ACCEPTED) friends.add(userDAO.getUserByUsername(friendRequest.getReceiver()));
+        }
+        return friends;
+    }
+
+    public List<FriendRequest> getFriendRequestsForUser(User user) {
+        List<FriendRequest> requests = new ArrayList<>();
+        for (FriendRequest friendRequest : friendRequests) {
+            if (user.getUsername().equals(friendRequest.getReceiver()) && friendRequest.getStatus() == FriendRequestStatus.WAIT) requests.add(friendRequest);
+        }
+        return requests;
+    }
+
     private FriendRequest getFriendRequestFromRow(String[] row) {
         User sender = userDAO.getUserByUsername(row[0]);
         User receiver = userDAO.getUserByUsername(row[1]);
         FriendRequestStatus status = FriendRequestStatus.valueOf(row[2]);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(row[3],formatter);
         FriendRequest friendRequest = new FriendRequest(row[0],row[1],status,dateTime);
         if (status.equals(FriendRequestStatus.ACCEPTED)) {

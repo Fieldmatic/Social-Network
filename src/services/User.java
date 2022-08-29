@@ -3,14 +3,19 @@ package services;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dao.Repository;
+import dto.NewPostDTO;
+import model.FriendRequest;
+import spark.Session;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
-import static spark.Spark.get;
-import static spark.Spark.path;
+import static spark.Spark.*;
 
 public class User {
     private final Repository repo;
@@ -43,6 +48,69 @@ public class User {
                     res.body("Picture not found!");
                 }
                 return res;
+            });
+
+            get("/friends",(req,res) -> {
+                Session ss = req.session(true);
+                model.User user = ss.attribute("user");
+                if (user != null) {
+                    List<model.User> friends = repo.getFriendRequestDAO().getFriendsForUser(user);
+                    return gson.toJson(friends);
+
+                }
+                else {
+                    res.status(401);
+                    res.body("User is not logged in !");
+                }
+                return res.body();
+            });
+
+            get("/friendRequests",(req,res) -> {
+                Session ss = req.session(true);
+                model.User user = ss.attribute("user");
+                if (user != null) {
+                    List<FriendRequest> requests = repo.getFriendRequestDAO().getFriendRequestsForUser(user);
+                    List<model.User> senders = repo.getUserDAO().getFriendRequestSenders(requests);
+                    return gson.toJson(senders);
+
+                }
+                else {
+                    res.status(401);
+                    res.body("User is not logged in !");
+                }
+                return res.body();
+            });
+
+            post("/acceptRequest",(req, res) -> {
+                String sender = req.queryParams("sender");
+                Session ss = req.session(true);
+                model.User user = ss.attribute("user");
+                res.type("application/json");
+                if (user != null) {
+                    if (repo.getFriendRequestDAO().acceptRequest(sender,user.getUsername())) {res.status(200); res.body("Success");}
+                    else {res.status(404); res.body("Not found");}
+                }
+                else {
+                    res.status(401);
+                    res.body("User is not logged in !");
+                }
+                return res.body();
+            });
+
+            post("/rejectRequest",(req, res) -> {
+                String sender = req.queryParams("sender");
+                Session ss = req.session(true);
+                model.User user = ss.attribute("user");
+                res.type("application/json");
+                if (user != null) {
+                    if (repo.getFriendRequestDAO().rejectRequest(sender,user.getUsername())) {res.status(200); res.body("Success");}
+                    else {res.status(404); res.body("Not found");}
+                }
+                else {
+                    res.status(401);
+                    res.body("User is not logged in !");
+                }
+                return res.body();
             });
         });
     }

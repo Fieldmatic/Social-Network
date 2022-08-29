@@ -32,17 +32,22 @@ Vue.component('search', {
              </div>
              
              <div v-for="user in users">
-                <div class="container-fluid d-inline-flex align-items-center border-bottom me-5 mt-3 justify-content-start">
-                    <img class="img-fluid rounded-circle my-2" v-bind:src="'user/picture?path=' + user.profilePicture" height="80" width="80"/>
-                    <div class="container text-dark">
-                        <div class="row">
-                            <span class="fw-bold">{{user.name}} {{user.surname}}</span>
-                        </div>
-                        <div class="row">
-                           <span> Date of Birth: {{user.birthDate.toLocaleDateString("en-GB")}} </span>
+                <div class="container-fluid d-inline-flex align-items-center border-bottom mt-3 justify-content-start">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <img class="img-fluid rounded-circle my-2" v-bind:src="'user/picture?path=' + user.profilePicture" height="80" width="80"/>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="container text-dark">
+                            <div class="row">
+                                <span class="fw-bold">{{user.name}} {{user.surname}}</span>
+                            </div>
+                            <div class="row">
+                               <span> Date of Birth: {{user.birthDate.toLocaleDateString("en-GB")}} </span>
+                            </div>
                         </div>
                     </div>
-                   
+                </div>
                 </div>      
              </div>
          </div>
