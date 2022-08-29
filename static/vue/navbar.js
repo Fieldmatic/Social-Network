@@ -1,6 +1,6 @@
 Vue.component('navbar', {
     template: `
-            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
               <div class="container-fluid">
                 <a class="navbar-brand me-5" href="#/">Socialize</a>
                 <div class="collapse navbar-collapse" id="navbarText">

@@ -1,4 +1,4 @@
 username,password,email,name,surname,birthDate,gender,role,profilePicture,privateAccount
-m,m,user@gmail.com,Mico,Milic,2000-04-11,MALE,USER,,false
-i,i,ivana@gmail.com,Ivana,Stevanovic,1999-12-31,FEMALE,USER,,false
-admin,admin,admin@gmail.com,Admin,Admin,1900-01-01,MALE,ADMIN,,false
+m,m,user@gmail.com,Mico,Milic,2000-04-11,MALE,USER,./data/images/m/prof.jpeg,false
+i,i,ivana@gmail.com,Ivana,Stevanovic,1999-12-31,FEMALE,USER,./data/images/m/prof.jpeg,false
+admin,admin,admin@gmail.com,Admin,Admin,1900-01-01,MALE,ADMIN,./data/images/m/prof.jpeg,false

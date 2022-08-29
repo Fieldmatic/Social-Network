@@ -13,6 +13,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import services.Authentication;
 import services.Post;
+import services.User;
 
 public class Main {
 	static Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
@@ -21,6 +22,7 @@ public class Main {
 	static Authentication authentication = new Authentication(repository);
 
 	static Post post = new Post(repository);
+	static User user = new User(repository);
 
 	public static void main(String[] args) throws IOException {
 		repository.load();
@@ -30,6 +32,7 @@ public class Main {
 
 		authentication.init();
 		post.init();
+		user.init();
 		
 
 	}
