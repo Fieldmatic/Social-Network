@@ -3,7 +3,7 @@ Vue.component('navbar', {
             <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
               <div class="container-fluid">
                 <a class="navbar-brand me-5" href="#/">Socialize</a>
-                <div class="collapse navbar-collapse" id="navbarText">
+                <div class="ms-auto collapse navbar-collapse" id="navbarText">
                   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                       <a class="nav-link active" aria-current="page" href="#/">Home</a>
@@ -21,11 +21,15 @@ Vue.component('navbar', {
                       <a class="nav-link" href="#/search">Search</a>
                     </li>
                     <li class="nav-item">
-                       <a class="nav-link" href="#">Logout</a>
+                       <a class="nav-link" href="/" v-on:click="logout()">Logout</a>
                     </li>
                   </ul>
-            
                 </div>
               </div>
-            </nav>`
+            </nav>`,
+    methods : {
+        logout : function() {
+            axios.get("/authentication/logout");
+        }
+    }
 });
