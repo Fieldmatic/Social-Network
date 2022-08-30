@@ -32,7 +32,9 @@ public class User {
                 String surname = req.queryParams("surname");
                 String startDate = req.queryParams("startDate");
                 String endDate = req.queryParams("endDate");
-                List<model.User> users = repo.getUserDAO().search(name,surname,startDate,endDate);
+                Session ss = req.session(true);
+                model.User user = ss.attribute("user");
+                List<model.User> users = repo.getUserDAO().search(name,surname,startDate,endDate, user.getUsername());
                 return gson.toJson(users);
             });
 

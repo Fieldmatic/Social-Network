@@ -32,7 +32,7 @@ Vue.component('search', {
              </div>
              
              <div v-for="user in users">
-                <div class="container-fluid d-inline-flex align-items-center border-bottom mt-3 justify-content-start">
+                <div class="container-fluid d-inline-flex align-items-center border-bottom mt-3 justify-content-start" @click="$router.push('/' + user.username)">
                 <div class="row align-items-center">
                     <div class="col-md-3">
                         <img class="img-fluid rounded-circle my-2" v-bind:src="'user/picture?path=' + user.profilePicture" height="80" width="80"/>
