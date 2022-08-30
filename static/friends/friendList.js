@@ -7,6 +7,9 @@ Vue.component('friendList',{
     template:
         `
          <div class="d-flex flex-column">
+             <div v-if="friends.length==0" class="w-auto mx-auto mt-3">
+                <h2> No friends to show yet.</h2>
+             </div>
              <div v-for="user in friends">
                     <div class="w-100 d-inline-flex align-items-center border-bottom mt-3" @click="$router.push('/' + user.username)">
                         <div class="row w-100 mx-auto align-items-center">

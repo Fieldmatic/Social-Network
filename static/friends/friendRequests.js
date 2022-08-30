@@ -10,6 +10,9 @@ Vue.component('friendRequests',{
              <div class="position-absolute mt-2 start-50 translate-middle-x p-3" style="z-index: 11">
                   <div id="liveToast" class="toast hide align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true"></div>
              </div>
+             <div v-if="requests.length==0" class="w-auto mx-auto mt-3">
+                <h2> You don't have any unanswered friend requests.</h2>
+             </div>
              <div v-for="user in requests">
                     <div class="w-100 d-inline-flex align-items-center border-bottom mt-3" @click="$router.push('/' + user.username)">
                         <div class="row w-100 mx-auto align-items-center">
