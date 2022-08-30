@@ -62,7 +62,7 @@ Vue.component('search', {
                 'startDate':"",
                 'endDate':""
             }
-        }).then((response) => { this.users = response.data; for(let user of this.users) {user.birthDate = new Date(user.birthDate['year'],user.birthDate['month'],user.birthDate['day'])}})
+        }).then((response) => { this.users = response.data; for(let user of this.users) {user.birthDate = new Date(user.birthDate['year'],user.birthDate['month']-1,user.birthDate['day'])}})
 
     },
     methods: {
@@ -77,7 +77,7 @@ Vue.component('search', {
             }).then((response) => {
                 this.users = response.data;
                 for (let user of this.users) {
-                    user.birthDate = new Date(user.birthDate['year'], user.birthDate['month'], user.birthDate['day'],)
+                    user.birthDate = new Date(user.birthDate['year'], user.birthDate['month']-1, user.birthDate['day'],)
                 }
             })
         },

@@ -36,6 +36,40 @@ public class User {
                 return gson.toJson(users);
             });
 
+            get("/loggedUser",(req,res) ->
+            {
+                Session ss = req.session(true);
+                model.User user = ss.attribute("user");
+                res.type("application/json");
+                if (user != null) {
+                    return gson.toJson(user);
+
+                }
+                else {
+                    res.status(401);
+                    res.body("User is not logged in !");
+                    return res.body();
+                }
+
+            });
+
+            get("/data",(req,res) ->
+            {
+                String username = req.queryParams("username");
+                model.User user = repo.getUserDAO().getUserByUsername(username);
+                res.type("application/json");
+                if (user != null) {
+                    return gson.toJson(user);
+
+                }
+                else {
+                    res.status(401);
+                    res.body("User is not logged in !");
+                    return res.body();
+                }
+
+            });
+
             get("/picture", (req, res) -> {
                 String path = req.queryParams("path");
                 try {
@@ -50,7 +84,7 @@ public class User {
                 return res;
             });
 
-            get("/friends",(req,res) -> {
+            get("/loggedUserFriends",(req,res) -> {
                 Session ss = req.session(true);
                 model.User user = ss.attribute("user");
                 if (user != null) {
@@ -63,6 +97,13 @@ public class User {
                     res.body("User is not logged in !");
                 }
                 return res.body();
+            });
+
+            get("/friends",(req,res) -> {
+                res.type("application/json");
+                String username = req.queryParams("username");
+                List<model.User> friends = repo.getFriendRequestDAO().getFriendsForUser(repo.getUserDAO().getUserByUsername(username));
+                return gson.toJson(friends);
             });
 
             get("/friendRequests",(req,res) -> {
