@@ -67,6 +67,41 @@ public class FriendRequestDAO {
         return false;
     }
 
+    public void createRequest(String sender, String receiver){
+        this.friendRequests.add(new FriendRequest(sender,receiver));
+        serialize();
+    }
+
+    public boolean requestExists(String sender, String receiver) {
+        for (FriendRequest request: friendRequests) {
+            if ((request.getSender().equals(sender)) && (request.getReceiver().equals(receiver)) && (request.getStatus().equals(FriendRequestStatus.WAIT)))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean stopFriendship(String username, String friendUsername){
+        for (FriendRequest request: friendRequests) {
+            if (((request.getSender().equals(username)) && (request.getReceiver().equals(friendUsername)) && (request.getStatus().equals(FriendRequestStatus.ACCEPTED)))
+                    || ((request.getSender().equals(friendUsername)) && (request.getReceiver().equals(username)) && (request.getStatus().equals(FriendRequestStatus.ACCEPTED))))
+            {
+                friendRequests.remove(request);
+                serialize();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean areFriends(String username1, String username2) {
+        for (FriendRequest request: friendRequests) {
+            if (((request.getSender().equals(username1)) && (request.getReceiver().equals(username2)) && (request.getStatus().equals(FriendRequestStatus.ACCEPTED)))
+                    || ((request.getSender().equals(username2)) && (request.getReceiver().equals(username1)) && (request.getStatus().equals(FriendRequestStatus.ACCEPTED))))
+                return true;
+        }
+        return false;
+    }
+
     public boolean rejectRequest(String sender, String receiver) {
         for (FriendRequest request: friendRequests) {
             if ((request.getSender().equals(sender)) && (request.getReceiver().equals(receiver)) && (request.getStatus().equals(FriendRequestStatus.WAIT)))

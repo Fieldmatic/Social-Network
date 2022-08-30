@@ -122,6 +122,77 @@ public class User {
                 return res.body();
             });
 
+            get("/isFriend",(req,res) -> {
+                String username = req.queryParams("username");
+                Session ss = req.session(true);
+                model.User user = ss.attribute("user");
+                if (user != null) {
+                    if (repo.getFriendRequestDAO().areFriends(username, user.getUsername())) {res.status(200); return true;}
+                    else {res.status(200); return false;}
+                }
+                else {
+                    res.status(401);
+                    res.body("User is not logged in !");
+                }
+                return res.body();
+            });
+
+            post("/createFriendRequest",(req, res) -> {
+                String receiver = req.queryParams("receiver");
+                Session ss = req.session(true);
+                model.User user = ss.attribute("user");
+                res.type("application/json");
+                if (user != null) {
+                    repo.getFriendRequestDAO().createRequest(user.getUsername(), receiver);
+                    res.status(200);
+                    res.body("Success");
+                }
+                else {
+                    res.status(401);
+                    res.body("User is not logged in !");
+                }
+                return res.body();
+            });
+
+            get("/requestExists",(req, res) -> {
+                String sender = req.queryParams("sender");
+                String receiver = req.queryParams("receiver");
+                res.type("application/json");
+                if (repo.getFriendRequestDAO().requestExists(sender, receiver))
+                {
+                    res.status(200);
+                    return true;
+                }
+                else {
+                    res.status(200);
+                    return false;
+                }
+
+            });
+
+            post("/stopFriendship",(req, res) -> {
+                String friend = req.queryParams("friend");
+                Session ss = req.session(true);
+                model.User user = ss.attribute("user");
+                res.type("application/json");
+                if (user != null) {
+                    if (repo.getFriendRequestDAO().stopFriendship(user.getUsername(), friend))
+                    {
+                        res.status(200);
+                        res.body("Success");
+                    }
+                    else {
+                        res.status(403);
+                        res.body("Request failed");
+                    }
+                }
+                else {
+                    res.status(401);
+                    res.body("User is not logged in !");
+                }
+                return res.body();
+            });
+
             post("/acceptRequest",(req, res) -> {
                 String sender = req.queryParams("sender");
                 Session ss = req.session(true);

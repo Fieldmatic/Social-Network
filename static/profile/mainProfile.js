@@ -17,9 +17,10 @@ Vue.component('mainProfile',{
                                         <div class="row">
                                             <h2 class="fw-bold">{{user.name}} {{user.surname}}</h2>
                                         </div>
-                                        <div class="row mt-2">
+                                        <div class="row">
                                            <span> Date of birth: {{user.birthDate.toLocaleDateString("en-GB")}}</span>
                                         </div>
+                              
                                     </div>
                             </div>
                        </div>

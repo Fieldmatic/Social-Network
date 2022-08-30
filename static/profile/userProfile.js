@@ -1,7 +1,11 @@
 Vue.component('userProfile',{
     data:function (){
         return {
-            user:null
+            user:null,
+            loggedUser:null,
+            isFriend:false,
+            sentRequestExists:false,
+            receivedRequestExists:false
         }
     },
     template:
@@ -17,9 +21,28 @@ Vue.component('userProfile',{
                                         <div class="row">
                                             <h2 class="fw-bold">{{user.name}} {{user.surname}}</h2>
                                         </div>
-                                        <div class="row mt-2">
+                                        <div class="row">
                                            <span> Date of birth: {{user.birthDate.toLocaleDateString("en-GB")}}</span>
                                         </div>
+                                        <div class="row w-50 mt-2 ms-1 d-flex align-items-center">
+                                            <button v-if="sentRequestExists" class="btn w-auto btn-secondary align-items-center">
+                                                <img class= "" src = "https://static.xx.fbcdn.net/rsrc.php/v3/yK/r/r2FA830xjtI.png?_nc_eui2=AeFEBkghhyzhzWa4KtTd_MlRLvJBHXhZHNwu8kEdeFkc3HT-xARCHyLzi1RzkbIyTXnTxi2poERtBPH94M3jWMwX" width="16" height="16"/>
+                                                <span>Request sent</span>
+                                            </button>
+                                            <button v-else-if="receivedRequestExists" class="btn w-auto btn-warning align-items-center">
+                                                <img class= "" src = "https://static.xx.fbcdn.net/rsrc.php/v3/yK/r/r2FA830xjtI.png?_nc_eui2=AeFEBkghhyzhzWa4KtTd_MlRLvJBHXhZHNwu8kEdeFkc3HT-xARCHyLzi1RzkbIyTXnTxi2poERtBPH94M3jWMwX" width="16" height="16"/>
+                                                <span>Waiting for your response</span>
+                                            </button>
+                                            <button v-else-if="!isFriend" class="btn w-auto btn-primary align-items-center" @click="sendRequest()">
+                                                <img class= "" src = "https://static.xx.fbcdn.net/rsrc.php/v3/yK/r/r2FA830xjtI.png?_nc_eui2=AeFEBkghhyzhzWa4KtTd_MlRLvJBHXhZHNwu8kEdeFkc3HT-xARCHyLzi1RzkbIyTXnTxi2poERtBPH94M3jWMwX" width="16" height="16"/>
+                                                <span>Add Friend</span>
+                                            </button>
+                                            <button v-else class="btn w-auto btn-danger align-items-center" @click="stopFriendship()">
+                                                <img class= "" src = "https://static.xx.fbcdn.net/rsrc.php/v3/yK/r/r2FA830xjtI.png?_nc_eui2=AeFEBkghhyzhzWa4KtTd_MlRLvJBHXhZHNwu8kEdeFkc3HT-xARCHyLzi1RzkbIyTXnTxi2poERtBPH94M3jWMwX" width="16" height="16"/>
+                                                <span>Remove Friend</span>
+                                            </button>
+                                        </div>
+                                        
                                     </div>
                             </div>
                        </div>
@@ -49,11 +72,29 @@ Vue.component('userProfile',{
         `,
     mounted:function () {
         let username = this.$route.params.username;
-        axios.get("/user/data",
+        axios.get("/user/loggedUser").then((response) => {this.loggedUser = response.data}).then (() => {
+            axios.get("/user/data",
+                {
+                    params:{"username":username}
+                }).then((response) => {this.user = response.data; this.user.birthDate = new Date( this.user.birthDate['year'], this.user.birthDate['month']-1, this.user.birthDate['day'])}).then (() =>
             {
-                params:{"username":username}
-            }).then((response) => {this.user = response.data; this.user.birthDate = new Date( this.user.birthDate['year'], this.user.birthDate['month']-1, this.user.birthDate['day'])})
+                axios.get("/user/requestExists",{params:{"sender":this.loggedUser.username,"receiver":this.user.username}}).then((response) => {this.sentRequestExists = response.data;})
+                axios.get("/user/requestExists",{params:{"sender":this.user.username,"receiver":this.loggedUser.username}}).then((response) => {this.receivedRequestExists = response.data;})
+                axios.get("/user/isFriend",{params:{"username":this.user.username}}).then((response) => {this.isFriend = response.data;})
 
+
+            })
+        })
+    },
+    methods:{
+        sendRequest(){
+            axios.post("/user/createFriendRequest",{},{params:{"receiver":this.user.username}}).then(() => {window.location.reload()})
+
+        },
+
+        stopFriendship(){
+            axios.post("/user/stopFriendship",{},{params:{"friend":this.user.username}}).then((response) => {console.log(response.data); this.isFriend = false; window.location.reload()})
+        }
     }
 
 })
