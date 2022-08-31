@@ -17,7 +17,7 @@ public class User {
     private Gender gender;
     private Role role;
     private String profilePicture;
-    private List<Post> posts;
+    private transient List<Post> posts;
     private List<String> pictures;
     private List<FriendRequest> friendRequests;
     private List<String> friends;
@@ -188,7 +188,6 @@ public class User {
                 ", gender=" + gender +
                 ", role=" + role +
                 ", profilePicture='" + profilePicture + '\'' +
-                ", posts=" + posts +
                 ", pictures=" + pictures +
                 ", friendRequests=" + friendRequests +
                 ", friends=" + friends +

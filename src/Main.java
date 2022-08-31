@@ -12,6 +12,7 @@ import dao.Repository;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import services.Authentication;
+import services.CommentService;
 import services.Post;
 import services.User;
 
@@ -23,6 +24,7 @@ public class Main {
 
 	static Post post = new Post(repository);
 	static User user = new User(repository);
+	static CommentService commentService = new CommentService(repository);
 
 	public static void main(String[] args) throws IOException {
 		repository.load();
@@ -33,6 +35,7 @@ public class Main {
 		authentication.init();
 		post.init();
 		user.init();
+		commentService.init();
 		
 
 	}

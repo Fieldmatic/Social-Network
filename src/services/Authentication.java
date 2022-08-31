@@ -32,6 +32,7 @@ public class Authentication {
                 RegistrationDTO registrationDTO = gson.fromJson(reqBody, RegistrationDTO.class);
                 User newUser = repo.getUserDAO().dtoToUser(registrationDTO);
                 if (repo.getUserDAO().credentialsAvailable(registrationDTO)) {
+                    newUser.setProfilePicture("./static/images/default-profile.jpg");
                     repo.getUserDAO().users.add(newUser);
                     repo.getUserDAO().serialize();
                     return gson.toJson(newUser);

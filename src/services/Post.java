@@ -46,7 +46,7 @@ public class Post {
                                 stream.write(fileData);
                             }
                         }
-                        repo.getPostDAO().createFromDTO(postDTO,user.getUsername());
+                        repo.getPostDAO().createFromDTO(postDTO, user);
                         res.status(200);
                         res.body("Success");
                     }

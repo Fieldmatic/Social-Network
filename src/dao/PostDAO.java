@@ -43,7 +43,7 @@ public class PostDAO {
         String image = row[2];
         String text = row[3];
         Boolean deleted = Boolean.valueOf(row[4]);
-        Post post = new Post(id,row[1],image,text,deleted);
+        Post post = new Post(id,row[1], user.getName(), user.getSurname(), user.getProfilePicture(), image,text,deleted);
         if (!deleted) user.getPosts().add(post);
         return post;
     }
@@ -64,8 +64,8 @@ public class PostDAO {
         }
     }
 
-    public void createFromDTO(NewPostDTO dto, String username) {
-        Post post = new Post(posts.get(posts.size()-1).getId() +1,username, dto.getPictureName(), dto.getText(), false);
+    public void createFromDTO(NewPostDTO dto, User user) {
+        Post post = new Post(posts.get(posts.size()-1).getId() +1, user.getUsername(), user.getName(), user.getSurname(), user.getProfilePicture(), dto.getPictureName(), dto.getText(), false);
         posts.add(post);
         serialize();
     }
@@ -80,9 +80,11 @@ public class PostDAO {
     public List<Post> getUserFeedPosts(User user) {
         ArrayList<Post> postsForUserFeed = new ArrayList<>();
         for (Post post: posts) {
-            User postOwner = this.userDAO.getUserByUsername(post.getUser());
-            if (user.getFriends().contains(post.getUser()) || !postOwner.getPrivateAccount()) {
-                postsForUserFeed.add(post);
+            if (!post.getOwnerUsername().equals(user.getUsername())) {
+                User postOwner = this.userDAO.getUserByUsername(post.getOwnerUsername());
+                if (user.getFriends().contains(post.getOwnerUsername()) || !postOwner.getPrivateAccount()) {
+                    postsForUserFeed.add(post);
+                }
             }
         }
         return postsForUserFeed;
