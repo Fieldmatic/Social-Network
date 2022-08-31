@@ -15,7 +15,7 @@ public class FriendRequest {
         this.sender = sender;
         this.receiver = receiver;
         this.status = FriendRequestStatus.WAIT;
-        this.date = LocalDateTime.now();
+        this.date = LocalDateTime.now().withSecond(0).withNano(0);
     }
 
     public FriendRequest(String sender, String receiver, FriendRequestStatus status, LocalDateTime date) {

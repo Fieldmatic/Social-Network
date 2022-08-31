@@ -32,7 +32,7 @@ Vue.component('search', {
              </div>
              
              <div v-for="user in users">
-                <div class="container-fluid d-inline-flex align-items-center border-bottom mt-3 justify-content-start">
+                <div class="container-fluid d-inline-flex align-items-center border-bottom mt-3 justify-content-start" @click="$router.push('/' + user.username)">
                 <div class="row align-items-center">
                     <div class="col-md-3">
                         <img class="img-fluid rounded-circle my-2" v-bind:src="'user/picture?path=' + user.profilePicture" height="80" width="80"/>
@@ -62,7 +62,7 @@ Vue.component('search', {
                 'startDate':"",
                 'endDate':""
             }
-        }).then((response) => { this.users = response.data; for(let user of this.users) {user.birthDate = new Date(user.birthDate['year'],user.birthDate['month'],user.birthDate['day'])}})
+        }).then((response) => { this.users = response.data; for(let user of this.users) {user.birthDate = new Date(user.birthDate['year'],user.birthDate['month']-1,user.birthDate['day'])}})
 
     },
     methods: {
@@ -77,7 +77,7 @@ Vue.component('search', {
             }).then((response) => {
                 this.users = response.data;
                 for (let user of this.users) {
-                    user.birthDate = new Date(user.birthDate['year'], user.birthDate['month'], user.birthDate['day'],)
+                    user.birthDate = new Date(user.birthDate['year'], user.birthDate['month']-1, user.birthDate['day'],)
                 }
             })
         },

@@ -86,7 +86,7 @@ public class UserDAO {
 
     }
 
-    public List<User> search(String name, String surname, String startDateText, String endDateText){
+    public List<User> search(String name, String surname, String startDateText, String endDateText, String loggedUser){
         List<User> result = new ArrayList<>();
         LocalDate startDate = startDateText.isEmpty() ? null :  LocalDate.parse(startDateText,DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         LocalDate endDate = endDateText.isEmpty() ? null : LocalDate.parse(endDateText, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -95,7 +95,7 @@ public class UserDAO {
                     (user.getName().equalsIgnoreCase(name) || name.isEmpty())
                 && (user.getSurname().equalsIgnoreCase(surname) || surname.isEmpty())
                 && (startDate == null || user.getBirthDate().isAfter(startDate))
-                && (endDate == null || user.getBirthDate().isBefore(endDate))
+                && (endDate == null || user.getBirthDate().isBefore(endDate)) && (!Objects.equals(user.getUsername(), loggedUser))
                )
                 result.add(user);
         }
