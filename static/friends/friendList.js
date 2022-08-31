@@ -11,7 +11,7 @@ Vue.component('friendList',{
                 <h2> No friends to show yet.</h2>
              </div>
              <div v-for="user in friends">
-                    <div class="w-100 d-inline-flex align-items-center border-bottom mt-3" @click="$router.push('/' + user.username)">
+                    <div class="w-100 d-inline-flex align-items-center border-bottom mt-3" @click="$router.push('/' + user.username)" style="cursor: pointer;">
                         <div class="row w-100 mx-auto align-items-center">
                             
                             <div class="col-md-2">

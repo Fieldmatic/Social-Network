@@ -50,13 +50,13 @@ Vue.component('userProfile',{
             </div>
             <div class = "w-50 align-items-center justify-content-center mx-auto mt-2 ps-5 border-bottom">
                 <div class="row w-100 mx-auto justify-content-center p-1">
-                     <div class="col-md-4" @click="$router.push('/' + user.username + '/posts')">
+                     <div class="col-md-4" @click="$router.push('/' + user.username + '/posts')" style="cursor: pointer;">
                         <span>Posts</span>
                      </div>
-                     <div class="col-md-4" @click="$router.push('/' + user.username)">
+                     <div class="col-md-4" @click="$router.push('/' + user.username)" style="cursor: pointer;">
                          <span>About</span>
                      </div>
-                     <div class="col-md-4" @click="$router.push('/' + user.username + '/friends')">
+                     <div class="col-md-4" @click="$router.push('/' + user.username + '/friends')" style="cursor: pointer;">
                         <span>Friends</span>
                      </div>
                 </div>              

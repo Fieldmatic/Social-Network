@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dao.Repository;
 import dto.NewPostDTO;
+import dto.RegistrationDTO;
 import model.FriendRequest;
 import spark.Session;
 
@@ -53,6 +54,16 @@ public class User {
                     return res.body();
                 }
 
+            });
+
+            put("/update",(req,res) -> {
+                String reqBody = req.body();
+                res.type("application/json");
+                RegistrationDTO updateDTO = gson.fromJson(reqBody, RegistrationDTO.class);
+                repo.getUserDAO().updateUser(updateDTO);
+                res.status(200);
+                res.body("Successfully updated your data");
+                return res.body();
             });
 
             get("/data",(req,res) ->

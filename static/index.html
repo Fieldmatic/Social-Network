@@ -12,7 +12,7 @@
     <div>
         <div class="container">
             <div class="row d-flex justify-content-center align-items-center">
-                <div class="col-md-4 my-5 p-4 rounded-3" style="background: #3F729B">
+                <div class="col-5 my-5 p-4 rounded-3" style="background: #3F729B">
                     <div class="position-absolute top-0 start-50 translate-middle-x p-3" style="z-index: 11">
                         <div id="liveToast" class="toast hide align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true"></div>
                     </div>
@@ -31,13 +31,13 @@
                         </div>
 
                         <div v-if="!registered" class="row justify-content-center mb-3">
-                            <div class="col-md-6 rounded-3">
+                            <div class="col-6 rounded-3">
                                 <div class="form-floating">
                                     <input type="text" v-model="user.name" id="name" placeholder="Name" class="form-control" required/>
                                     <label for="name" class="form-label">Name</label>
                                 </div>
                             </div>
-                            <div class="col-md-6 rounded-3">
+                            <div class="col-6 rounded-3">
                                 <div class="form-floating">
                                     <input type="text" v-model="user.surname" id="surname" placeholder="Surname" class="form-control" required/>
                                     <label for="surname" class="form-label">Surname</label>

@@ -28,19 +28,19 @@ Vue.component('mainProfile',{
             </div>
             <div class = "w-50 align-items-center justify-content-center mx-auto mt-2 ps-5 border-bottom">
                 <div class="row w-100 mx-auto justify-content-center p-1">
-                     <div class="col-md-4" @click="$router.push('/profile/posts')">
+                     <div class="col-md-4" @click="$router.push('/profile/posts')" style="cursor: pointer;">
                         <span>Posts</span>
                      </div>
-                     <div class="col-md-4" @click="$router.push('/profile/posts')">
+                     <div class="col-md-4" @click="$router.push('/profile/edit')" style="cursor: pointer;">
                          <span>Edit profile</span>
                      </div>
-                     <div class="col-md-4" @click="$router.push('/profile/friends')">
+                     <div class="col-md-4" @click="$router.push('/profile/friends')" style="cursor: pointer;">
                         <span>Friends</span>
                      </div>
                 </div>              
             </div>
             
-            <div class="row w-50 mt-2 mx-auto">
+            <div class="row w-50 mt-3 mx-auto">
                 <router-view></router-view>
             </div>
             

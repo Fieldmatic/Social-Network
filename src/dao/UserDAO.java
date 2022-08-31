@@ -86,6 +86,20 @@ public class UserDAO {
 
     }
 
+    public void updateUser(RegistrationDTO dto) {
+        User user = getUserByUsername(dto.getUsername());
+        user.setUsername(dto.getUsername());
+        user.setPassword(dto.getPassword());
+        user.setName(dto.getName());
+        user.setSurname(dto.getSurname());
+        user.setBirthDate(LocalDate.parse(dto.getBirthDate(),DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        user.setEmail(dto.getEmail());
+        user.setProfilePicture(dto.getProfilePicture());
+        user.setGender(Gender.valueOf(dto.getGender()));
+        user.setPrivateAccount(dto.getPrivateAccount());
+        serialize();
+    }
+
     public List<User> search(String name, String surname, String startDateText, String endDateText, String loggedUser){
         List<User> result = new ArrayList<>();
         LocalDate startDate = startDateText.isEmpty() ? null :  LocalDate.parse(startDateText,DateTimeFormatter.ofPattern("yyyy-MM-dd"));
