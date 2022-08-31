@@ -92,6 +92,6 @@ public class Comment {
     }
 
     public String toRow() {
-        return id + "," + post + "," + user + "," + text + "," + date + "," + dateChanged + "," + deleted;
+        return id + "," + post + "," + user.getUsername() + "," + text + "," + date + "," + dateChanged + "," + deleted;
     }
 }
