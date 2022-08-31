@@ -5,14 +5,14 @@ import java.time.LocalDateTime;
 
 public class Comment {
     private Integer id;
-    private String user;
+    private User user;
     private Integer post;
     private String text;
     private LocalDateTime date;
     private LocalDateTime dateChanged;
     private Boolean deleted;
 
-    public Comment(Integer id, String user, Integer post, String text, LocalDateTime date, LocalDateTime dateChanged, Boolean deleted) {
+    public Comment(Integer id, User user, Integer post, String text, LocalDateTime date, LocalDateTime dateChanged, Boolean deleted) {
         this.id = id;
         this.user = user;
         this.post = post;
@@ -30,11 +30,11 @@ public class Comment {
         this.id = id;
     }
 
-    public String getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(String user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -89,5 +89,9 @@ public class Comment {
                 ", dateChanged=" + dateChanged +
                 ", deleted=" + deleted +
                 '}';
+    }
+
+    public String toRow() {
+        return id + "," + post + "," + user + "," + text + "," + date + "," + dateChanged + "," + deleted;
     }
 }
