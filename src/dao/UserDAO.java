@@ -42,7 +42,7 @@ public class UserDAO {
     public void serialize(){
         try {
             StringBuilder inputBuffer = new StringBuilder();
-            inputBuffer.append("username,password,email,name,surname,birthDate,gender,role,profilePicture,privateAccount\n");
+            inputBuffer.append("username,password,email,name,surname,birthDate,gender,role,profilePicture,privateAccount,blocked\n");
             for(User user : users) {
                 inputBuffer.append(user.toRow());
                 inputBuffer.append("\n");
@@ -67,7 +67,8 @@ public class UserDAO {
         Role role = Role.valueOf(row[7]);
         String profilePicture = row[8];
         Boolean privateAccount = Boolean.parseBoolean(row[9]);
-        return new User(username,password,email,name,surname,birthDate,gender,role,profilePicture,privateAccount);
+        Boolean blocked = Boolean.parseBoolean(row[10]);
+        return new User(username,password,email,name,surname,birthDate,gender,role,profilePicture,privateAccount,blocked);
     }
 
     public User dtoToUser(RegistrationDTO dto) {
@@ -82,6 +83,7 @@ public class UserDAO {
         user.setProfilePicture(dto.getProfilePicture());
         user.setGender(Gender.valueOf(dto.getGender()));
         user.setPrivateAccount(dto.getPrivateAccount());
+        user.setBlocked(false);
         return user;
 
     }
@@ -136,6 +138,16 @@ public class UserDAO {
             if (user.getUsername().equals(dto.getUsername()) && user.getPassword().equals(dto.getPassword())) return true;
         }
         return false;
+    }
+
+    public void blockUser(User user) {
+        user.setBlocked(true);
+        serialize();
+    }
+
+    public void unBlockUser(User user) {
+        user.setBlocked(false);
+        serialize();
     }
 
     public boolean credentialsAvailable(RegistrationDTO dto) {

@@ -222,6 +222,28 @@ public class User {
                 return res.body();
             });
 
+            post("/block",(req,res) -> {
+                String username = req.queryParams("username");
+                model.User user = repo.getUserDAO().getUserByUsername(username);
+                res.type("application/json");
+                repo.getUserDAO().blockUser(user);
+                res.status(200);
+                res.body("Successfully blocked user " + user.getName() + " " + user.getSurname());
+                return res.body();
+
+            });
+
+            post("/unblock",(req,res) -> {
+                String username = req.queryParams("username");
+                model.User user = repo.getUserDAO().getUserByUsername(username);
+                res.type("application/json");
+                repo.getUserDAO().unBlockUser(user);
+                res.status(200);
+                res.body("Successfully unblocked user " + user.getName() + " " + user.getSurname());
+                return res.body();
+
+            });
+
             post("/rejectRequest",(req, res) -> {
                 String sender = req.queryParams("sender");
                 Session ss = req.session(true);

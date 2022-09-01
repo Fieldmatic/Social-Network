@@ -53,8 +53,8 @@ Vue.component('userProfile',{
                      <div class="col-md-4" @click="$router.push('/' + user.username + '/posts')" style="cursor: pointer;">
                         <span>Posts</span>
                      </div>
-                     <div class="col-md-4" @click="$router.push('/' + user.username)" style="cursor: pointer;">
-                         <span>About</span>
+                     <div class="col-md-4" @click="$router.push('/' + user.username + '/mutualFriends')" style="cursor: pointer;">
+                         <span>Mutual friends</span>
                      </div>
                      <div class="col-md-4" @click="$router.push('/' + user.username + '/friends')" style="cursor: pointer;">
                         <span>Friends</span>

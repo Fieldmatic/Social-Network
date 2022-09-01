@@ -44,6 +44,7 @@ Vue.component('friendRequests',{
     },
     methods:{
         acceptRequest(user){
+            event.stopPropagation();
             axios.post("/user/acceptRequest",{},{
                 params:{
                     "sender":user.username
@@ -51,11 +52,12 @@ Vue.component('friendRequests',{
             }).then(async (response) => {
                 this.showToast("You are now friends with " + user.name + " " + user.surname)
                 await new Promise(resolve => setTimeout(resolve, 2000));
-                window.location.reload();
+                this.requests = this.requests.filter((item) => item!== user)
             })
 
         },
         rejectRequest(user){
+            event.stopPropagation();
             axios.post("/user/rejectRequest",{},{
                 params:{
                     "sender":user.username
@@ -63,7 +65,7 @@ Vue.component('friendRequests',{
             }).then(async (response) => {
                 this.showToast("You declined friend request from " + user.name + " " + user.surname)
                 await new Promise(resolve => setTimeout(resolve, 2000));
-                window.location.reload();
+                this.requests = this.requests.filter((item) => item!== user)
             })
 
         },

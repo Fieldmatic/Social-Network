@@ -24,8 +24,10 @@ public class User {
 
     private Boolean privateAccount;
 
+    private Boolean blocked;
 
-    public User(String username, String password, String email, String name, String surname, LocalDate birthDate, Gender gender, Role role, String profilePicture, List<Post> posts, List<String> pictures, List<FriendRequest> friendRequests, List<String> friends, Boolean privateAccount) {
+
+    public User(String username, String password, String email, String name, String surname, LocalDate birthDate, Gender gender, Role role, String profilePicture, List<Post> posts, List<String> pictures, List<FriendRequest> friendRequests, List<String> friends, Boolean privateAccount, Boolean blocked) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -40,9 +42,10 @@ public class User {
         this.friendRequests = friendRequests;
         this.friends = friends;
         this.privateAccount = privateAccount;
+        this.blocked = blocked;
     }
 
-    public User(String username, String password, String email, String name, String surname, LocalDate birthDate, Gender gender, Role role, String profilePicture, Boolean privateAccount) {
+    public User(String username, String password, String email, String name, String surname, LocalDate birthDate, Gender gender, Role role, String profilePicture, Boolean privateAccount, Boolean blocked) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -53,6 +56,7 @@ public class User {
         this.role = role;
         this.profilePicture = profilePicture;
         this.privateAccount = privateAccount;
+        this.blocked = blocked;
         this.posts = new ArrayList<>();
         this.pictures = new ArrayList<>();
         this.friendRequests = new ArrayList<>();
@@ -63,6 +67,8 @@ public class User {
 
     }
 
+    public boolean getBlocked() {return blocked;}
+    public void setBlocked(Boolean blocked) {this.blocked = blocked;}
 
     public String getUsername() {
         return username;
@@ -196,6 +202,6 @@ public class User {
     }
 
     public String toRow() {
-        return username+","+password+","+email+","+name+","+surname+","+birthDate+","+gender+","+role+","+profilePicture+","+privateAccount;
+        return username+","+password+","+email+","+name+","+surname+","+birthDate+","+gender+","+role+","+profilePicture+","+privateAccount+","+blocked;
     }
 }

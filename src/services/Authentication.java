@@ -60,6 +60,7 @@ public class Authentication {
                }
                else if (repo.getUserDAO().validCredentials(loginDTO)) {
                    user = repo.getUserDAO().getUserByUsername(loginDTO.getUsername());
+                   if (user.getBlocked()) { res.status(403); res.body("This account has been blocked."); return res.body();}
                    ss.attribute("user",user);
                    return gson.toJson(user);
                }
