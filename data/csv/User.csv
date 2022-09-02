@@ -1,5 +1,6 @@
-username,password,email,name,surname,birthDate,gender,role,profilePicture,privateAccount
-m,m,user@gmail.com,Mico,Milic,2000-04-11,MALE,USER,./data/images/m/prof.jpeg,false
-i,i,ivana@gmail.com,Ivana,Stevanovic,1999-12-31,FEMALE,USER,./data/images/m/prof.jpeg,false
-m123,m123,dragan@gmail.com,Dragan,Mirkovic,1999-12-31,FEMALE,USER,./data/images/m/prof.jpeg,false
-admin,admin,admin@gmail.com,Admin,Admin,1900-01-01,MALE,ADMIN,./data/images/m/prof.jpeg,false
+username,password,email,name,surname,birthDate,gender,role,profilePicture,privateAccount,blocked
+m,m,milicftn@gmail.com,Mico,Milic,2000-04-11,MALE,USER,./data/images/m/prof.jpeg,false,false
+i,i,ivana@gmail.com,Ivana,Stevanovic,1999-12-31,FEMALE,USER,./data/images/m/prof.jpeg,false,false
+m123,m123,dragan@gmail.com,Dragan,Mirkovic,1999-12-31,FEMALE,USER,./data/images/m/prof.jpeg,false,false
+admin,admin,admin@gmail.com,Admin,Admin,1900-01-01,MALE,ADMIN,./data/images/m/prof.jpeg,false,false
+k,k,k@gmail.com,k,k,2022-09-30,FEMALE,USER,./static/images/default-profile.jpg,true,false
