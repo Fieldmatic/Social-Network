@@ -119,6 +119,16 @@ public class User {
                 return gson.toJson(friends);
             });
 
+            get("/mutualFriends",(req,res) -> {
+                res.type("application/json");
+                String username = req.queryParams("username");
+                Session ss = req.session(true);
+                model.User user1 = ss.attribute("user");
+                model.User user2 = repo.getUserDAO().getUserByUsername(username);
+                List<model.User> friends = repo.getFriendRequestDAO().getMutualFriends(user1,user2);
+                return gson.toJson(friends);
+            });
+
             get("/friendRequests",(req,res) -> {
                 Session ss = req.session(true);
                 model.User user = ss.attribute("user");

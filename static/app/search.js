@@ -36,7 +36,7 @@ Vue.component('search', {
              </div>
              
              <div v-for="user in users" :key="user.username">
-                <div class="container-fluid d-inline-flex align-items-center border-bottom mt-3 justify-content-start" @click="$router.push('/' + user.username)"  style="cursor: pointer;">
+                <div class="container-fluid d-inline-flex align-items-center border-bottom mt-3 justify-content-start" @click="$router.push('/' + user.username + '/posts')"  style="cursor: pointer;">
                 <div class="row w-75 align-items-center">
                     <div class="col-md-1">
                         <img class="img-fluid rounded-circle my-2" v-bind:src="'user/picture?path=' + user.profilePicture" height="80" width="80"/>

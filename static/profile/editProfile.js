@@ -63,7 +63,11 @@ Vue.component('editProfile',{
                                     <input class="form-check-input" type="radio" name="gender" id="male" @change="onChange($event)" value="MALE" required>
                                     <label class="form-check-label" for="male">Male</label>
                                 </div>
-                                
+                                <div class="form-check form-switch mb-4">
+                                  <input class="form-check-input" type="checkbox" role="switch" id="privateAccount" v-model="user.privateAccount">
+                                  <label class="form-check-label" for="flexSwitchCheckDefault">Private account</label>
+                                </div>
+                               
                                 <div class="form-floating mb-3">
                                     <input type="password" v-model="oldPassword" id="oldPassword" placeholder="Old password" class="form-control" required/>
                                     <label for="password" class="form-label">Old Password</label>

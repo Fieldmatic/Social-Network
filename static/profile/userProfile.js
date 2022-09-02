@@ -62,8 +62,14 @@ Vue.component('userProfile',{
                 </div>              
             </div>
             
-            <div class="row w-50 mt-2 mx-auto">
-                <router-view></router-view>
+            <div v-if = "user" class="row w-50 mt-2 mx-auto d-inline-flex">
+                <router-view v-if = "this.$route.matched.some(route => route.path.includes('/friends')) && ((isFriend) || (!user.privateAccount))"></router-view>
+                <router-view v-else-if = "this.$route.matched.some(route => route.path.includes('/mutualFriends'))"></router-view>
+                <router-view v-else-if = "this.$route.matched.some(route => route.path.includes('/posts')) && ((isFriend) || (!user.privateAccount))"></router-view>
+                <div v-else class="mx-auto w-50 d-inline-flex justify-content-center mt-3">
+                    <h4> This account is private.</h4>
+                </div>
+                
             </div>
             
        </div>      

@@ -26,6 +26,7 @@ const router = new VueRouter({
         {path :"/:username", component: UserProfile,
             children: [
                 {path : 'posts', component : Post},
+                {path : 'mutualFriends', component : FriendList},
                 {path : 'friends', component : FriendList}
             ]},
 

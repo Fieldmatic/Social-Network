@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FriendRequestDAO {
     public List<FriendRequest> friendRequests;
@@ -120,6 +121,16 @@ public class FriendRequestDAO {
             if (user.getUsername().equals(friendRequest.getReceiver()) && friendRequest.getStatus() == FriendRequestStatus.ACCEPTED) friends.add(userDAO.getUserByUsername(friendRequest.getSender()));
             if (user.getUsername().equals(friendRequest.getSender()) && friendRequest.getStatus() == FriendRequestStatus.ACCEPTED) friends.add(userDAO.getUserByUsername(friendRequest.getReceiver()));
         }
+        return friends;
+    }
+
+    public List<User> getMutualFriends(User user1, User user2) {
+        List<model.User> friends = new ArrayList<>();
+        List<model.User> user1Friends = getFriendsForUser(user1);
+        List<model.User> user2Friends = getFriendsForUser(user2);
+        friends= user1Friends.stream()
+                .filter(user2Friends::contains)
+                .collect(Collectors.toList());
         return friends;
     }
 

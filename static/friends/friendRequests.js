@@ -14,7 +14,7 @@ Vue.component('friendRequests',{
                 <h2> You don't have any unanswered friend requests.</h2>
              </div>
              <div v-for="user in requests">
-                    <div class="w-100 d-inline-flex align-items-center border-bottom mt-3" @click="$router.push('/' + user.username)" style="cursor: pointer;">
+                    <div class="w-100 d-inline-flex align-items-center border-bottom mt-3" @click="$router.push('/' + user.username + '/posts')" style="cursor: pointer;">
                         <div class="row w-100 mx-auto align-items-center">
                             <div class="col-md-2">
                                 <img class="img-fluid rounded-circle my-2 float-end" v-bind:src="'user/picture?path=' + user.profilePicture" height="80" width="80"/>

@@ -10,7 +10,7 @@ Vue.component('navbar', {
                            <a class="nav-link active" aria-current="page" href="#/">Home</a>
                          </li>
                          <li class="nav-item">
-                           <a class="nav-link" href="#/profile">Your profile</a>
+                           <a class="nav-link" href="#/profile/posts">Your profile</a>
                          </li>
                          <li class="nav-item">
                            <a class="nav-link" href="#/friendList">Friends</a>

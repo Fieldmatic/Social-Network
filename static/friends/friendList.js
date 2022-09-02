@@ -8,10 +8,10 @@ Vue.component('friendList',{
         `
          <div class="d-flex flex-column">
              <div v-if="friends.length==0" class="w-auto mx-auto mt-3">
-                <h2> No friends to show yet.</h2>
+                <h4> No friends to show yet.</h4>
              </div>
              <div v-for="user in friends">
-                    <div class="w-100 d-inline-flex align-items-center border-bottom mt-3" @click="$router.push('/' + user.username)" style="cursor: pointer;">
+                    <div class="w-100 d-inline-flex align-items-center border-bottom mt-3" @click="$router.push('/' + user.username + '/posts')" style="cursor: pointer;">
                         <div class="row w-100 mx-auto align-items-center">
                             
                             <div class="col-md-2">
@@ -35,7 +35,8 @@ Vue.component('friendList',{
         `,
     mounted:function (){
         let username = this.$route.params.username;
-        if (username) axios.get("/user/friends",{params:{'username':username}}).then((response) => {this.friends = response.data;for(let user of this.friends) {user.birthDate = new Date(user.birthDate['year'],user.birthDate['month']-1,user.birthDate['day'])}})
+        if ((this.$route.matched.some(route => route.path.includes('/mutualFriends'))) && (username)) axios.get("/user/mutualFriends",{params:{'username':username}}).then((response) => {this.friends = response.data;for(let user of this.friends) {user.birthDate = new Date(user.birthDate['year'],user.birthDate['month']-1,user.birthDate['day'])}})
+        else if (username) axios.get("/user/friends",{params:{'username':username}}).then((response) => {this.friends = response.data;for(let user of this.friends) {user.birthDate = new Date(user.birthDate['year'],user.birthDate['month']-1,user.birthDate['day'])}})
         else axios.get("/user/loggedUserFriends").then((response) => {this.friends = response.data;for(let user of this.friends) {user.birthDate = new Date(user.birthDate['year'],user.birthDate['month']-1,user.birthDate['day'])}})
     }
 })
