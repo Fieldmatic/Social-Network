@@ -89,4 +89,14 @@ public class PostDAO {
         }
         return postsForUserFeed;
     }
+
+    public List<Post> getUserPosts(User user) {
+        ArrayList<Post> userPosts = new ArrayList<>();
+        for (Post post: posts) {
+            if (post.getOwnerUsername().equals(user.getUsername())) {
+                    userPosts.add(post);
+            }
+        }
+        return userPosts;
+    }
 }

@@ -79,4 +79,15 @@ public class CommentDAO {
         post.getComments().add(newComment);
         serialize();
     }
+
+    public boolean deleteComment(Integer commentId) {
+        for (Comment comment : comments) {
+            if (comment.getId().equals(commentId)) {
+                comment.setDeleted(true);
+                serialize();
+                return true;
+            }
+        }
+        return false;
+    }
 }

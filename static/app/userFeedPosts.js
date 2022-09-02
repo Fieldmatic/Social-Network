@@ -41,9 +41,8 @@ Vue.component('userFeedPosts',
 
         },
         mounted () {
-            axios
-                .get('post/getUserFeedPosts')
-                .then(response => (this.posts = response.data))
+            if ((this.$route.matched.some(route => route.path.includes('profile/posts')))) axios.get("/post/getUserPosts").then(response => {this.posts = response.data;})
+            else axios.get('post/getUserFeedPosts').then(response => {this.posts = response.data; document.getElementById("posts").style.width = "40%";})
         }
     }
 )

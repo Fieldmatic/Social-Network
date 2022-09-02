@@ -72,6 +72,20 @@ public class Post {
                     return res.body();
                 }
             });
+
+            get("/getUserPosts", (req, res) -> {
+                res.type("application/json");
+                Session ss = req.session(true);
+                User user = ss.attribute("user");
+                if (user != null) {
+                    return gson.toJson(this.repo.getPostDAO().getUserPosts(user));
+                }
+                else {
+                    res.status(401);
+                    res.body("User is not logged in !");
+                    return res.body();
+                }
+            });
         });
     }
 }

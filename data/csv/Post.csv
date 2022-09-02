@@ -1,3 +1,5 @@
 id,userId,picture,text,deleted
-1,m,,Odlican post, false
-2,i,,Odlican post, false
+1,m,,Odlican post,false
+2,i,,Odlican post,false
+3,k,./data/images/k/trash.png,novi moj post,false
+4,k,,moj novi post,false

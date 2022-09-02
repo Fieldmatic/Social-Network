@@ -7,7 +7,7 @@ Vue.component('post',
           }
         },
         template: `
-            <div class="mx-auto" style="width: 40%">
+            <div class="mx-auto" id="posts">
                 <div class="mx-auto mt-2 "  style="border-color:lightgray; border-style:solid; border-radius: 15px;border-width: 1px;"">        
                     <div class="row w-100 mx-auto pt-4">
                         <div class="col-12"> 
@@ -39,6 +39,7 @@ Vue.component('post',
                 if ((this.text.length > 0) || (this.file)) return true;
             }
         },
+
         methods:{
             showPicture:function () {
                 let picture = document.querySelector('#picture');
