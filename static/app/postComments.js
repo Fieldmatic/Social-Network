@@ -2,11 +2,10 @@ Vue.component('postComments',
     {
         data : function() {
             return {
-                comment : "",
-                loggedUser : ""
+                comment : ""
             }
         },
-        props: ['userProfilePicture', 'postId', 'postComments', 'refreshComments'],
+        props: ['userProfilePicture', 'postId', 'postComments', 'refreshComments', 'loggedUser'],
         template : `
                 <div class="d-flex flex-column mt-1 mb-2 border-top border-2" style="overflow-y: auto; max-height: 30vh">
                     <div class="d-inline-flex mt-2">
@@ -60,11 +59,6 @@ Vue.component('postComments',
                 });
             }
 
-        },
-        mounted () {
-            axios
-                .get('user/loggedUser')
-                .then(response => (this.loggedUser = response.data))
         }
     }
 )

@@ -39,7 +39,6 @@ Vue.component('post',
                 if ((this.text.length > 0) || (this.file)) return true;
             }
         },
-
         methods:{
             showPicture:function () {
                 let picture = document.querySelector('#picture');
@@ -69,8 +68,6 @@ Vue.component('post',
                     }
                 }
                 else axios.post("/post/add", JSON.stringify(newPost)).then((response) => { console.log(response.data)})}
-
-
             }
 
     }

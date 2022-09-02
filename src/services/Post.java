@@ -86,6 +86,28 @@ public class Post {
                     return res.body();
                 }
             });
+
+            post("/deletePost", (req, res) ->
+            {
+                Session ss = req.session(true);
+                User user = ss.attribute("user");
+                Integer postId = Integer.parseInt(req.queryParams("postId"));
+                res.type("application/json");
+
+                if (user != null) {
+                    model.Post postForDeleting = this.repo.getPostDAO().deletePost(postId);
+                    if (postForDeleting == null) { res.status(400); res.body("Post is incorrect.");}
+                    else {
+                        this.repo.getCommentDAO().deletePostComments(postForDeleting);
+                        res.status(200);
+                        res.body("Success");
+                    }
+                } else {
+                    res.status(401);
+                    res.body("User is not logged in !");
+                }
+                return res.body();
+            });
         });
     }
 }

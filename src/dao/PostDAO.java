@@ -1,6 +1,7 @@
 package dao;
 
 import dto.NewPostDTO;
+import model.Comment;
 import model.Post;
 import model.User;
 
@@ -98,5 +99,16 @@ public class PostDAO {
             }
         }
         return userPosts;
+    }
+
+    public Post deletePost(Integer postId) {
+        for (Post post : posts) {
+            if (post.getId().equals(postId)) {
+                post.setDeleted(true);
+                serialize();
+                return post;
+            }
+        }
+        return null;
     }
 }
