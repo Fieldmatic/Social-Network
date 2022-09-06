@@ -7,7 +7,7 @@ Vue.component('postComments',
         },
         props: ['userProfilePicture', 'postId', 'postComments', 'refreshComments', 'loggedUser'],
         template : `
-                <div class="d-flex flex-column mt-1 mb-2 border-top border-2" style="overflow-y: auto; max-height: 30vh">
+                <div class="d-flex flex-column me-1 mt-1 mb-2 border-top border-2" style="overflow-y: auto; max-height: 30vh">
                     <div class="d-inline-flex mt-2">
                         <img class="img-fluid rounded-circle my-1 ms-2" v-bind:src="'user/picture?path=' + loggedUser.profilePicture" height="30" width="30"/>
                         <div class="d-flex flex-fill ms-2" style="border-radius: 20px; background: #F0F0F0">

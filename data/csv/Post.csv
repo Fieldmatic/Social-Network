@@ -1,5 +1,9 @@
 id,userId,picture,text,deleted
 1,m,,Odlican post,false
-2,i,,Odlican post,false
-3,k,./data/images/k/trash.png,novi moj post,false
+2,i,,Odlican post,true
+3,k,./data/images/k/trash.png,novi moj post,true
 4,k,,moj novi post,false
+5,m,./data/images/m/like.png,sdfsdfffffffffffffffffsdfsdf,false
+6,k,./data/images/k/redTrash2.png,opa breee,false
+7,i,,ivanica,false
+8,m,./data/images/m/default-profile.jpg,novi,false
