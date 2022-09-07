@@ -27,8 +27,8 @@ Vue.component('search', {
              
              <div class='container-fluid ms-2 mt-3'>
                 <a>Sort by:</a>
-                <select id="sortSelect" @change="onChange($event)">
-                    <option value="name" selected >Name</option>
+                <select v-if="users.length" id="sortSelect" @change="onChange($event)">
+                    <option value="name" selected>Name</option>
                     <option value="surname">Surname</option>
                     <option value="dateAsc">Birthday Ascending</option>
                     <option value="dateDesc">Birthday Descending</option>
@@ -77,8 +77,17 @@ Vue.component('search', {
                 'startDate':"",
                 'endDate':""
             }
-        }).then((response) => { this.users = response.data; for(let user of this.users) {user.birthDate = new Date(user.birthDate['year'],user.birthDate['month']-1,user.birthDate['day'])}})
-        axios.get("/user/loggedUser").then((response) => { this.loggedUser = response.data})
+        }).then((response) => { this.users = response.data;
+                                for(let user of this.users)
+                                 {
+                                    user.birthDate = new Date(user.birthDate['year'],user.birthDate['month']-1,user.birthDate['day'])
+                                 }
+                                 let event = {target:{value:"name"}};
+                                 this.onChange(event);
+                             })
+        axios.get("/user/loggedUser").then((response) => {
+                                                          this.loggedUser = response.data;
+                                                         })
     },
     methods: {
         searchUsers() {

@@ -11,11 +11,14 @@ public class Repository {
 
     private FriendRequestDAO friendRequestDAO;
 
+    private MessageDAO messageDAO;
+
     public Repository(){
         this.userDAO = new UserDAO();
         this.postDAO = new PostDAO(this.userDAO);
         this.commentDAO = new CommentDAO(this.userDAO, this.postDAO);
         this.friendRequestDAO = new FriendRequestDAO(this.userDAO);
+        this.messageDAO = new MessageDAO(this.userDAO);
     }
 
     public void load(){
@@ -23,8 +26,16 @@ public class Repository {
         postDAO.load();
         commentDAO.load();
         friendRequestDAO.load();
+        messageDAO.load();
     }
 
+    public MessageDAO getMessageDAO() {
+        return messageDAO;
+    }
+
+    public void setMessageDAO(MessageDAO messageDAO) {
+        this.messageDAO = messageDAO;
+    }
 
     public FriendRequestDAO getFriendRequestDAO() {
         return friendRequestDAO;

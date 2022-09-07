@@ -1,33 +1,41 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Message {
-    private User sender;
-    private User receiver;
+    private String sender;
+    private String receiver;
     private String messageContent;
-    private LocalDate date;
+    private LocalDateTime timeStamp;
 
-    public Message(User sender, User receiver, String messageContent, LocalDate date) {
+    public Message(String sender, String receiver, String messageContent) {
         this.sender = sender;
         this.receiver = receiver;
         this.messageContent = messageContent;
-        this.date = date;
+        this.timeStamp = LocalDateTime.now().withSecond(0).withNano(0);
     }
 
-    public User getSender() {
+    public Message(String sender, String receiver, String messageContent, LocalDateTime timeStamp) {
+        this.sender = sender;
+        this.receiver = receiver;
+        this.messageContent = messageContent;
+        this.timeStamp = timeStamp;
+    }
+
+    public String getSender() {
         return sender;
     }
 
-    public void setSender(User sender) {
+    public void setSender(String sender) {
         this.sender = sender;
     }
 
-    public User getReceiver() {
+    public String getReceiver() {
         return receiver;
     }
 
-    public void setReceiver(User receiver) {
+    public void setReceiver(String receiver) {
         this.receiver = receiver;
     }
 
@@ -39,12 +47,12 @@ public class Message {
         this.messageContent = messageContent;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDateTime getTimeStamp() {
+        return timeStamp;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setDate(LocalDateTime timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     @Override
@@ -53,7 +61,11 @@ public class Message {
                 "sender=" + sender +
                 ", receiver=" + receiver +
                 ", messageContent='" + messageContent + '\'' +
-                ", date=" + date +
+                ", timeStamp=" + timeStamp +
                 '}';
+    }
+
+    public String toRow() {
+        return sender + "," + receiver + "," +messageContent + "," + timeStamp;
     }
 }
