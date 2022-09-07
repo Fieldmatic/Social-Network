@@ -37,9 +37,9 @@ Vue.component('userFeedPosts',
                              </div>   
                         </div>
                         <div class="card-body d-flex">
-                            <span class="card-text flex-fill" v-on:click="showScreen(post)" data-toggle="modal" data-target="#detailedViewModal">{{post.text}}</span>
+                            <span style="word-wrap: break-word; max-width: 100%" class="card-text flex-fill" v-on:click="createPostLayout(post)" data-toggle="modal" data-target="#detailedViewModal">{{post.text}}</span>
                         </div>
-                        <img v-if="post.picture" v-on:click="showScreen(post)" v-bind:src="'user/picture?path=' + post.picture" class="card-img-bottom">    
+                        <img v-if="post.picture" v-on:click="createPostLayout(post)" v-bind:src="'user/picture?path=' + post.picture" class="card-img-bottom">    
                         <div class="d-flex">
                             <button class="btn flex-fill fw-bold text-black-50" > <img class="me-2 mb-1" src="images/like.png" width="19" height="19" />Like</button>
                             <button class="btn flex-fill fw-bold text-black-50" v-on:click="showComments(index)"><img class="me-2" src="images/comment.png" width="17" height="17" />Comment</button>
@@ -57,7 +57,6 @@ Vue.component('userFeedPosts',
             },
 
             refreshFeed : function() {
-                console.log("ooo")
                 if ((this.$route.matched.some(route => route.path.includes('profile/posts')))) axios.get("/post/getUserPosts").then(response =>
                 {
                     this.posts = response.data;
@@ -94,7 +93,6 @@ Vue.component('userFeedPosts',
                 });
             },
             showScreen : function(post) {
-                console.log(post)
                 this.postForModal = post;
                 this.$refs.details.sendPostForDetailedView(post, this.loggedUser);
                 $('#detailedViewModal').modal('show')
@@ -103,6 +101,35 @@ Vue.component('userFeedPosts',
                 console.log(this.postForDetailedView)
                 return this.postForDetailedView;
             },
+            createPostLayout : function (post) {
+                const row = document.getElementById("row");
+                if (row.children.length > 1) {
+                    row.removeChild(row.children[0])
+                }
+                document.getElementById('detailedViewModalDialog').classList.remove('modal-xl');
+                document.getElementById('modalInfoColumn').classList.remove('col-6');
+
+                if (post.picture) {
+                    document.getElementById('detailedViewModalDialog').classList.add('modal-xl');
+
+                    const pictureDiv = document.createElement("div");
+                    const pictureTag = document.createElement("img");
+                    pictureDiv.classList.add('col-6');
+                    pictureTag.src = 'user/picture?path=' + post.picture;
+                    pictureTag.width = 800;
+                    pictureTag.height = 800;
+                    pictureTag.classList.add('img-fluid');
+                    pictureDiv.appendChild(pictureTag);
+
+                    row.insertBefore(pictureDiv, row.children[0]);
+
+                    document.getElementById('modalInfoColumn').classList.add('col-6');
+                } else {
+                    document.getElementById('detailedViewModalDialog').classList.add('modal-lg');
+                    document.getElementById('modalInfoColumn').classList.add('col');
+                }
+                this.showScreen(post);
+            }
         },
         mounted () {
             if ((this.$route.matched.some(route => route.path.includes('profile/posts')))) axios.get("/post/getUserPosts").then(response => {this.posts = response.data;})
