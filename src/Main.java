@@ -8,13 +8,11 @@ import java.io.File;
 import java.io.IOException;
 import java.security.Key;
 
+import chat.ChatWebSocketHandler;
 import dao.Repository;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import services.Authentication;
-import services.CommentService;
-import services.Post;
-import services.User;
+import services.*;
 
 public class Main {
 	static Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
@@ -26,17 +24,21 @@ public class Main {
 	static User user = new User(repository);
 	static CommentService commentService = new CommentService(repository);
 
+	static MessageService messageService = new MessageService(repository);
+	static ChatWebSocketHandler chatWebSocketHandler = new ChatWebSocketHandler(repository);
+
 	public static void main(String[] args) throws IOException {
 		repository.load();
 		port(8000);
 		
 		staticFiles.externalLocation(new File("./static").getCanonicalPath());
+		webSocket("/chat", chatWebSocketHandler);
 
 		authentication.init();
 		post.init();
 		user.init();
 		commentService.init();
-		
+		messageService.init();
 
 	}
 

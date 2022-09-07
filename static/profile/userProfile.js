@@ -42,6 +42,11 @@ Vue.component('userProfile',{
                                                 <span>Remove Friend</span>
                                             </button>
                                         </div>
+                                        <div class="row w-50 mt-2 ms-1 d-flex align-items-center">
+                                            <button class="btn w-auto btn-secondary align-items-center" @click="openChat()">
+                                               <span>Open chat</span>
+                                            </button>
+                                        </div>
                                         
                                     </div>
                             </div>
@@ -100,6 +105,10 @@ Vue.component('userProfile',{
 
         stopFriendship(){
             axios.post("/user/stopFriendship",{},{params:{"friend":this.user.username}}).then((response) => {console.log(response.data); this.isFriend = false; window.location.reload()})
+        },
+        openChat(){
+            this.$root.$emit('openChat',this.user);
+
         }
     }
 
