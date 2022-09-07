@@ -9,16 +9,14 @@ public class Comment {
     private Integer post;
     private String text;
     private LocalDateTime date;
-    private LocalDateTime dateChanged;
     private Boolean deleted;
 
-    public Comment(Integer id, User user, Integer post, String text, LocalDateTime date, LocalDateTime dateChanged, Boolean deleted) {
+    public Comment(Integer id, User user, Integer post, String text, LocalDateTime date, Boolean deleted) {
         this.id = id;
         this.user = user;
         this.post = post;
         this.text = text;
         this.date = date;
-        this.dateChanged = dateChanged;
         this.deleted = deleted;
     }
 
@@ -62,14 +60,6 @@ public class Comment {
         this.date = date;
     }
 
-    public LocalDateTime getDateChanged() {
-        return dateChanged;
-    }
-
-    public void setDateChanged(LocalDateTime dateChanged) {
-        this.dateChanged = dateChanged;
-    }
-
     public Boolean getDeleted() {
         return deleted;
     }
@@ -86,12 +76,11 @@ public class Comment {
                 ", post=" + post +
                 ", text='" + text + '\'' +
                 ", date=" + date +
-                ", dateChanged=" + dateChanged +
                 ", deleted=" + deleted +
                 '}';
     }
 
     public String toRow() {
-        return id + "," + post + "," + user.getUsername() + "," + text + "," + date + "," + dateChanged + "," + deleted;
+        return id + "," + post + "," + user.getUsername() + "," + text + "," + date + "," + deleted;
     }
 }

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dao.Repository;
 import dto.NewPostDTO;
+import enums.Role;
 import model.User;
 import org.eclipse.jetty.http.HttpStatus;
 import spark.Session;
@@ -13,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Objects;
 
 import static spark.Spark.*;
 
@@ -64,7 +66,8 @@ public class Post {
                 Session ss = req.session(true);
                 User user = ss.attribute("user");
                 if (user != null) {
-                    return gson.toJson(this.repo.getPostDAO().getUserFeedPosts(user));
+                    if (user.getRole() == Role.USER) return gson.toJson(this.repo.getPostDAO().getUserFeedPosts(user));
+                    else return gson.toJson(this.repo.getPostDAO().getAllPosts());
                 }
                 else {
                     res.status(401);
@@ -102,6 +105,24 @@ public class Post {
                         res.status(200);
                         res.body("Success");
                     }
+                } else {
+                    res.status(401);
+                    res.body("User is not logged in !");
+                }
+                return res.body();
+            });
+
+            put("/leaveLikeOrDislike", (req, res) -> {
+                res.type("application/json");
+                Integer postId = Integer.parseInt(req.queryParams("postId"));
+                String likeOrDislike = req.queryParams("likeOrDislike");
+                Session ss = req.session(true);
+                User user = ss.attribute("user");
+                if (user != null) {
+                    if (likeOrDislike.equals("like")) this.repo.getPostDAO().leaveLike(postId, user.getUsername());
+                    else this.repo.getPostDAO().leaveDislike(postId, user.getUsername());
+                    res.status(200);
+                    res.body("Success");
                 } else {
                     res.status(401);
                     res.body("User is not logged in !");

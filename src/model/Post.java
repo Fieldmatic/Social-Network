@@ -12,9 +12,10 @@ public class Post {
     private String picture;
     private String text;
     private List<Comment> comments;
+    private List<String> likes;
     private Boolean deleted;
 
-    public Post(Integer id, String username, String name, String surname, String ownerProfilePicture, String picture, String text, Boolean deleted) {
+    public Post(Integer id, String username, String name, String surname, String ownerProfilePicture, String picture, String text, List<String> likes, Boolean deleted) {
         this.id = id;
         this.ownerUsername = username;
         this.ownerName = name;
@@ -23,6 +24,7 @@ public class Post {
         this.picture = picture;
         this.text = text;
         this.comments = new ArrayList<>();
+        this.likes = likes;
         this.deleted = deleted;
     }
 
@@ -98,6 +100,14 @@ public class Post {
         this.ownerProfilePicture = ownerProfilePicture;
     }
 
+    public List<String> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<String> likes) {
+        this.likes = likes;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -110,8 +120,17 @@ public class Post {
                 '}';
     }
 
-    public String toRow() {
-        return id + "," + ownerUsername + "," + picture + "," + text + "," + deleted;
+    public String getLikesField() {
+        String likesField = ",";
+        for(int i = 0; i < likes.size(); i++) {
+            likesField = likesField.concat(likes.get(i));
+            if (i != likes.size() - 1) likesField += '-';
+        }
+        likesField += ',';
+        return likesField;
     }
 
+    public String toRow() {
+        return id + "," + ownerUsername + "," + picture + "," + text + this.getLikesField() + deleted;
+    }
 }

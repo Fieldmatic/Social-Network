@@ -12,7 +12,7 @@ Vue.component('postComments',
                         <img class="img-fluid rounded-circle my-1 ms-2" v-bind:src="'user/picture?path=' + loggedUser.profilePicture" height="30" width="30"/>
                         <div class="d-flex flex-fill ms-2" style="border-radius: 20px; background: #F0F0F0">
                             <input v-model="comment" class="border-0 ms-3" type="text" id="username" placeholder="Enter a comment" style="background: #F0F0F0; width: 80%"/>
-                            <button class="btn fw-bold ms-auto" style="color: #3F729B; width: fit-content; border-radius: 20px" v-on:click="publishComment()">Publish</button>
+                            <button class="btn fw-bold ms-auto" style="color: #3F729B; width: fit-content; border-radius: 20px" v-on:click="publishComment()" :disabled="comment.length === 0">Publish</button>
                         </div>                        
                     </div>
                     <div class="d-flex" v-for="(postComment, index) in postComments">
@@ -38,10 +38,8 @@ Vue.component('postComments',
                             "postId" : this.postId,
                             "commentText" : this.comment
                         }
-                    })
-                    .then(() => {
+                    }).then(() => {
                         this.comment = ""
-                        console.log("success")
                         this.refreshComments()
                     })
             },

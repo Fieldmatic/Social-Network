@@ -6,6 +6,7 @@ Vue.component('userFeedPosts',
                 indexOfCommentToShow : -1,
                 loggedUser : {},
                 postForModal : {},
+                postToDelete : {},
             }
         }, template : `
                 <div class="d-flex flex-column mt-4">
@@ -20,11 +21,11 @@ Vue.component('userFeedPosts',
                                 <button type="button" class="btn-close" id="modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
                               <div class="modal-body">
-                                Are you sure you want to delete your post?
+                                Are you sure you want to delete the post?
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" data-bs-dismiss="modal" v-on:click="deletePost(post)" class="btn" style="background: red; color: white">Delete</button>
+                                <button type="button" data-bs-dismiss="modal" v-on:click="deletePost()" class="btn" style="background: red; color: white">Delete</button>
                               </div>
                             </div>
                           </div>
@@ -33,7 +34,7 @@ Vue.component('userFeedPosts',
                              <div class="d-flex align-items-center">
                                         <img class="img-fluid rounded-circle" v-bind:src="'user/picture?path=' + post.ownerProfilePicture" height="40" width="40"/>
                                         <h5 class="ms-1 mt-2" style="color: #282828">{{post.ownerName}} {{post.ownerSurname}}</h5>
-                                        <button v-if="post.ownerUsername===loggedUser.username" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn ms-auto float-end fw-bold text-black-50 fw-bolder" style="width: fit-content; font-size: xx-large">...</button>
+                                        <button v-if="(post.ownerUsername===loggedUser.username && loggedUser.role==='USER') || (loggedUser.role==='ADMIN')" v-on:click="savePostForDeletion(post)" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn ms-auto float-end fw-bold text-black-50 fw-bolder" style="width: fit-content; font-size: xx-large">...</button>
                              </div>   
                         </div>
                         <div class="card-body d-flex">
@@ -41,7 +42,7 @@ Vue.component('userFeedPosts',
                         </div>
                         <img v-if="post.picture" v-on:click="createPostLayout(post)" v-bind:src="'user/picture?path=' + post.picture" class="card-img-bottom">    
                         <div class="d-flex">
-                            <button class="btn flex-fill fw-bold text-black-50" > <img class="me-2 mb-1" src="images/like.png" width="19" height="19" />Like</button>
+                            <button class="btn flex-fill fw-bold text-black-50" v-on:click="handleLike(post)"> <img id="likeDislikeImage" v-bind:src="'images/' + setLikeOrDislike(post) + '.png'" class="me-2 mb-1" width="19" height="19" />{{setLikeOrDislike(post)}}</button>
                             <button class="btn flex-fill fw-bold text-black-50" v-on:click="showComments(index)"><img class="me-2" src="images/comment.png" width="17" height="17" />Comment</button>
                         </div>  
                         <postComments :loggedUser="loggedUser" :refreshComments="refreshFeed" :userProfilePicture="post.ownerProfilePicture" :postId="post.id" :postComments="post.comments" v-if="indexOfCommentToShow===index"></postComments>
@@ -55,7 +56,22 @@ Vue.component('userFeedPosts',
                 if (index === this.indexOfCommentToShow) this.indexOfCommentToShow = -1;
                 else this.indexOfCommentToShow = index;
             },
-
+            setLikeOrDislike : function (post) {
+                if (post.likes.includes(this.loggedUser.username)) return "Dislike";
+                else return "Like";
+            },
+            handleLike : function (post) {
+                let likeOrDislike;
+                if (post.likes.includes(this.loggedUser.username)) likeOrDislike = "dislike";
+                else likeOrDislike = "like";
+                axios.put("/post/leaveLikeOrDislike", {}, {
+                    params: {
+                        "postId": post.id,
+                        "likeOrDislike": likeOrDislike
+                    }
+                }).then(() => {this.refreshFeed()})
+                    .catch(function error(err) {console.log("error")});
+            },
             refreshFeed : function() {
                 if ((this.$route.matched.some(route => route.path.includes('profile/posts')))) axios.get("/post/getUserPosts").then(response =>
                 {
@@ -78,28 +94,23 @@ Vue.component('userFeedPosts',
                 })
 
             },
-            deletePost : function (post) {
+            savePostForDeletion : function (post) {
+                this.postToDelete = post;
+            },
+            deletePost : function () {
                 axios.post("/post/deletePost", {}, {
                     params: {
-                        "postId": post.id
+                        "postId": this.postToDelete.id
                     }
-                })
-                    .then(() => {
-                        post.deleted = true
+                }).then(() => {
+                        this.postToDelete.deleted = true
                         $('#modal-close').click();
-                        }
-                    ).catch(function error(err) {
-                    console.log("error")
-                });
+                        }).catch(function error(err) {console.log("error")});
             },
             showScreen : function(post) {
                 this.postForModal = post;
                 this.$refs.details.sendPostForDetailedView(post, this.loggedUser);
                 $('#detailedViewModal').modal('show')
-            },
-            getPost : function() {
-                console.log(this.postForDetailedView)
-                return this.postForDetailedView;
             },
             createPostLayout : function (post) {
                 const row = document.getElementById("row");

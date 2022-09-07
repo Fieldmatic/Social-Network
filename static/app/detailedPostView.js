@@ -12,8 +12,6 @@ Vue.component('detailedPostView',
                     <div class="modal-content" style="min-height: 60vh">
                       <div class="modal-body">
                       <div class="row" id="row">
-                     
-                     
                       <div id="modalInfoColumn">
                           <div class="d-flex align-items-center mb-3">
                             <img id="postOwnerPicture" class="img-fluid rounded-circle" v-bind:src="'user/picture?path=' + post.ownerProfilePicture" height="40" width="40"/>
