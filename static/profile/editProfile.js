@@ -4,17 +4,32 @@ Vue.component('editProfile',{
             user:"",
             newPassword:"",
             passwordConfirm:"",
-            oldPassword:""
+            oldPassword:"",
+            photos:[],
+            file:undefined
 
         }
         },
     template:`
                    
-                    <form id="editProfileForm" class="w-50 mx-auto min-vh-100">
+                    <form id="editProfileForm" class="w-50 mx-auto min-vh-120 mb-5">
                         <div class="position-absolute mt-2 start-50 translate-middle-x p-3" style="z-index: 11">
                             <div id="liveToast" class="toast hide align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true"></div>
                         </div>
-                        <div class="form-floating mb-3 text-dark">
+                            <div class="form-floating mb-3 d-flex flex-column  justify-content-center">
+                                <img class="img-fluid rounded-circle align-self-center" id = "profileP" :key="user.profilePicture" v-bind:src="'user/picture?path=' + user.profilePicture" height="168" width="168"/>
+                                <div class="d-inline-flex w-100 align-items-center mt-2">
+                                    <label class="me-2">New profile picture: </label>
+                                    <input class="w-50" title=" " type="file" id="fileUpload" style="color:transparent;font-size:0.9em" v-on:change="showPicture();" accept="image/png, image/gif, image/jpeg">
+                                </div>
+                                <div class="d-inline-flex w-100 align-items-center mt-2">
+                                    <label class="w-25">Pictures : </label>
+                                    <select class="w-75" v-if="photos" id="photoSelect" @change="onProfilePictureChange($event)">
+                                        <option v-for="photo in photos" :value="photo">{{photo}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3 text-dark">
                                 <input type="text" v-model="user.username" id="username" placeholder="Username" class="form-control" disabled/>
                                 <label for="username" class="form-label">Username</label>
                             </div>
@@ -80,13 +95,19 @@ Vue.component('editProfile',{
         axios.get("/user/loggedUser").then(response =>
         {
             this.user = response.data;
+            this.photos.push(this.user.profilePicture)
             this.user.birthDate = new Date(this.user.birthDate['year'],this.user.birthDate['month']-1,this.user.birthDate['day']+1);
             this.user.birthDate = this.user.birthDate.toISOString().slice(0,10);
-            console.log(this.user.gender)
             if (this.user.gender === "MALE") document.querySelector("#male").checked=true
             else document.querySelector('#female').checked = true;
 
-        })
+        }).then(
+        axios.get("/user/photos").then(response =>
+        {
+            for(let photo of response.data) this.photos.push(photo);
+            this.photos = [...new Set(this.photos)]
+            console.log(this.photos)
+        }))
     },
     methods:{
         onChange(event) {
@@ -104,8 +125,33 @@ Vue.component('editProfile',{
                         }
                     }
                 else axios.put("/user/update",this.user).then((response) => {this.showToast(response.data)})
+                if (this.file)
+                {
+                    let fileReader = new FileReader();
+                    let file = document.querySelector('#fileUpload').files[0];
+                    fileReader.readAsDataURL(file);
+                    fileReader.onloadend = () =>
+                    {
+                        let request = {};
+                        request.picture = fileReader.result
+                        request.pictureName = this.file.name
+                        axios.post("/user/uploadProfilePicture", JSON.stringify(request))
+                    }
+                }
             }
 
+        },
+        showPicture:function () {
+            let picture = document.querySelector('#profileP');
+            let fileReader = new FileReader();
+            let file = document.querySelector('#fileUpload').files[0];
+            this.file = file;
+            fileReader.onloadend = () => {picture.src = fileReader.result;}
+            fileReader.readAsDataURL(file);
+
+        },
+        onProfilePictureChange(event) {
+            this.user.profilePicture = event.target.value
         },
         showToast : function(message) {
             let toastExample = document.getElementById('liveToast');

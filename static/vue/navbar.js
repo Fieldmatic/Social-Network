@@ -21,6 +21,9 @@ Vue.component('navbar', {
                          <li class="nav-item">
                            <a class="nav-link" href="#/search">Search</a>
                          </li>
+                         <li class="nav-item">
+                           <a class="nav-link" href="#/messages">Messages</a>
+                         </li>
                     </div>
                     <div class="w-50 me-2">
                         <li class="nav-item float-end">

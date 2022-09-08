@@ -9,6 +9,7 @@ const FriendRequests = {template:'<friendRequests></friendRequests>'}
 const MainProfile = {template:'<mainProfile></mainProfile>'}
 const UserProfile = {template:'<userProfile></userProfile>'}
 const EditProfile = {template:'<editProfile></editProfile>'}
+const History = {template:'<history></history>'}
 
 const router = new VueRouter({
     mode:'hash',
@@ -17,6 +18,7 @@ const router = new VueRouter({
         {path :"/search", component:Search},
         {path :"/friendList", component:FriendList},
         {path :"/friendRequests", component:FriendRequests},
+        {path: "/messages",component: History},
         {path :"/profile", component:MainProfile,
              children: [
                  {path : 'posts', component : Post},

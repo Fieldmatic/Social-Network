@@ -5,7 +5,8 @@ Vue.component('userProfile',{
             loggedUser:null,
             isFriend:false,
             sentRequestExists:false,
-            receivedRequestExists:false
+            receivedRequestExists:false,
+            statusChanged:false
         }
     },
     template:
@@ -14,8 +15,8 @@ Vue.component('userProfile',{
             <div class="w-75 align-items-center border-bottom mt-3 mx-auto">
                         <div v-if="user!==null" class="row container-fluid align-items-center mb-2">
                             <div class="col-md-2">
-                                <img class="img-fluid rounded-circle my-2 float-end" v-bind:src="'user/picture?path=' + user.profilePicture" height="168" width="168"/>
-                            </div>
+                                <img id = "profilePic" class="img-fluid rounded-circle my-2 float-end" v-bind:src="'user/picture?path=' + user.profilePicture" height="168" width="168" alt="profilePicture"/>
+                            </div>       
                             <div class="col-md-6">
                                     <div class="container text-dark align-items-center">
                                         <div class="row">
@@ -24,7 +25,7 @@ Vue.component('userProfile',{
                                         <div class="row">
                                            <span> Date of birth: {{user.birthDate.toLocaleDateString("en-GB")}}</span>
                                         </div>
-                                        <div class="row w-50 mt-2 ms-1 d-flex align-items-center">
+                                        <div class="row w-50 mt-2 ms-1 d-flex align-items-center" :key="statusChanged">
                                             <button v-if="sentRequestExists" class="btn w-auto btn-secondary align-items-center">
                                                 <img class= "" src = "https://static.xx.fbcdn.net/rsrc.php/v3/yK/r/r2FA830xjtI.png?_nc_eui2=AeFEBkghhyzhzWa4KtTd_MlRLvJBHXhZHNwu8kEdeFkc3HT-xARCHyLzi1RzkbIyTXnTxi2poERtBPH94M3jWMwX" width="16" height="16"/>
                                                 <span>Request sent</span>
@@ -42,7 +43,7 @@ Vue.component('userProfile',{
                                                 <span>Remove Friend</span>
                                             </button>
                                         </div>
-                                        <div class="row w-50 mt-2 ms-1 d-flex align-items-center">
+                                        <div v-if="isFriend || !user.privateAccount" class="row w-50 mt-2 ms-1 d-flex align-items-center">
                                             <button class="btn w-auto btn-secondary align-items-center" @click="openChat()">
                                                <span>Open chat</span>
                                             </button>
@@ -82,33 +83,34 @@ Vue.component('userProfile',{
     
         `,
     mounted:function () {
-        let username = this.$route.params.username;
-        axios.get("/user/loggedUser").then((response) => {this.loggedUser = response.data}).then (() => {
-            axios.get("/user/data",
-                {
-                    params:{"username":username}
-                }).then((response) => {this.user = response.data; this.user.birthDate = new Date( this.user.birthDate['year'], this.user.birthDate['month']-1, this.user.birthDate['day'])}).then (() =>
-            {
-                axios.get("/user/requestExists",{params:{"sender":this.loggedUser.username,"receiver":this.user.username}}).then((response) => {this.sentRequestExists = response.data;})
-                axios.get("/user/requestExists",{params:{"sender":this.user.username,"receiver":this.loggedUser.username}}).then((response) => {this.receivedRequestExists = response.data;})
-                axios.get("/user/isFriend",{params:{"username":this.user.username}}).then((response) => {this.isFriend = response.data;})
-
-
-            })
-        })
+        this.load()
     },
     methods:{
         sendRequest(){
-            axios.post("/user/createFriendRequest",{},{params:{"receiver":this.user.username}}).then(() => {window.location.reload()})
+            axios.post("/user/createFriendRequest",{},{params:{"receiver":this.user.username}}).then(() => {this.load()})
 
         },
 
         stopFriendship(){
-            axios.post("/user/stopFriendship",{},{params:{"friend":this.user.username}}).then((response) => {console.log(response.data); this.isFriend = false; window.location.reload()})
+            axios.post("/user/stopFriendship",{},{params:{"friend":this.user.username}}).then((response) => {this.isFriend = false; this.load()})
         },
         openChat(){
             this.$root.$emit('openChat',this.user);
+        },
+        load(){
+            let username = this.$route.params.username;
+            axios.get("/user/loggedUser").then((response) => {this.loggedUser = response.data}).then (() => {
+                axios.get("/user/data",
+                    {
+                        params:{"username":username}
+                    }).then((response) => {this.user = response.data; this.user.birthDate = new Date( this.user.birthDate['year'], this.user.birthDate['month']-1, this.user.birthDate['day'])}).then (() =>
+                {
+                    axios.get("/user/requestExists",{params:{"sender":this.loggedUser.username,"receiver":this.user.username}}).then((response) => {this.sentRequestExists = response.data;})
+                    axios.get("/user/requestExists",{params:{"sender":this.user.username,"receiver":this.loggedUser.username}}).then((response) => {this.receivedRequestExists = response.data;})
+                    axios.get("/user/isFriend",{params:{"username":this.user.username}}).then((response) => {this.isFriend = response.data;})
 
+                })
+            })
         }
     }
 
