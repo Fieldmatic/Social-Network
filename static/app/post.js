@@ -64,10 +64,12 @@ Vue.component('post',
                     {
                         newPost.picture = fileReader.result
                         newPost.pictureName = this.file.name
-                        axios.post("/post/add", JSON.stringify(newPost)).then((response) => { console.log(response.data)})
+                        axios.post("/post/add", JSON.stringify(newPost)).then((response) => {this.text = ""; this.file = ""; document.getElementById("picture").src = "";}
+
+                        )
                     }
                 }
-                else axios.post("/post/add", JSON.stringify(newPost)).then((response) => { console.log(response.data)})}
+                else axios.post("/post/add", JSON.stringify(newPost)).then((response) => { this.text = ""})}
             }
 
     }

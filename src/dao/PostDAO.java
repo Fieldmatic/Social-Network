@@ -79,6 +79,14 @@ public class PostDAO {
         }
     }
 
+    public List<String> getPhotos(User user){
+        List<String> photos = new ArrayList<>();
+        for(Post post : posts) {
+            if (post.getOwnerUsername().equals(user.getUsername()) && !Objects.equals(post.getPicture(), "")) photos.add(post.getPicture());
+        }
+        return photos;
+    }
+
     public void createFromDTO(NewPostDTO dto, User user) {
         Post post = new Post(posts.get(posts.size()-1).getId() +1, user.getUsername(), user.getName(), user.getSurname(), user.getProfilePicture(), dto.getPictureName(), dto.getText(), new ArrayList<>(), false);
         posts.add(post);

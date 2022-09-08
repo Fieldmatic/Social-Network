@@ -9,7 +9,7 @@ Vue.component('mainProfile',{
         <div class="d-flex flex-column">
             <div class="w-75 align-items-center border-bottom mt-3 mx-auto">
                         <div v-if="user!==null" class="row container-fluid align-items-center mb-2">
-                            <div class="col-md-2">
+                            <div type="file" class="col-md-2">
                                 <img class="img-fluid rounded-circle my-2 float-end" v-bind:src="'user/picture?path=' + user.profilePicture" height="168" width="168"/>
                             </div>
                             <div class="col-md-6">

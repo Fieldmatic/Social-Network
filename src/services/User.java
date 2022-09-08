@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dao.Repository;
 import dto.NewPostDTO;
+import dto.ProfilePictureDTO;
 import dto.RegistrationDTO;
 import model.FriendRequest;
 import spark.Session;
@@ -111,6 +112,57 @@ public class User {
                 }
                 return res.body();
             });
+
+            post("/uploadProfilePicture", (req,res) ->
+            {
+                res.type("application/json");
+                Session ss = req.session(true);
+                model.User user = ss.attribute("user");
+
+                if (user != null) {
+                    ProfilePictureDTO pictureDTO = gson.fromJson(req.body(),ProfilePictureDTO.class);
+                    if (pictureDTO == null) { res.status(400); res.body("Picture not sent properly");}
+                    else
+                    {
+                        if (!pictureDTO.getPictureName().isEmpty()) {
+                            byte[] fileData = Base64.getDecoder().decode(pictureDTO.getPicture().split(",")[1]);
+                            String path = "./data/images/" + user.getUsername() + "/" + pictureDTO.getPictureName();
+                            pictureDTO.setPictureName(path);
+                            repo.getUserDAO().getUserByUsername(user.getUsername()).setProfilePicture(pictureDTO.getPictureName());
+                            File file = new File(path);
+                            file.getParentFile().mkdirs();
+                            try (OutputStream stream = new FileOutputStream(file,false)) {
+                                stream.write(fileData);
+                            }
+                        }
+                        res.status(200);
+                        res.body("Success");
+                    }
+
+                }
+                else {
+                    res.status(401);
+                    res.body("User is not logged in !");
+                }
+                return res.body();
+            });
+
+            get("/photos",(req,res) -> {
+                Session ss = req.session(true);
+                model.User user = ss.attribute("user");
+                res.type("application/json");
+                if (user != null) {
+                    List<String> photos = repo.getPostDAO().getPhotos(user);
+                    return gson.toJson(photos);
+
+                }
+                else {
+                    res.status(401);
+                    res.body("User is not logged in !");
+                }
+                return res.body();
+            });
+
 
             get("/friends",(req,res) -> {
                 res.type("application/json");

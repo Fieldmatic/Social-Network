@@ -1,5 +1,6 @@
 package dao;
 
+import dto.ChatItemDTO;
 import dto.MessageDTO;
 import model.Comment;
 import model.Message;
@@ -10,7 +11,9 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MessageDAO {
     private List<Message> messages;
@@ -64,6 +67,23 @@ public class MessageDAO {
         } catch (Exception e) {
             System.out.println("Error");
         }
+    }
+
+    public List<ChatItemDTO> getChatHistory(User user) {
+        Map<String,Message> messageMap = new HashMap<>();
+        List<ChatItemDTO> chatHistory = new ArrayList<>();
+        for(Message message : messages)
+        {
+            if (message.getSender().equals(user.getUsername()))
+                messageMap.put(message.getReceiver(), message);
+            if (message.getReceiver().equals(user.getUsername()))
+                messageMap.put(message.getSender(), message);
+        }
+        for (String key : messageMap.keySet()) {
+            chatHistory.add(new ChatItemDTO(userDAO.getUserByUsername(key),messageMap.get(key)));
+        }
+        chatHistory.sort((c1,c2) -> c2.getMessage().getTimeStamp().compareTo(c1.getMessage().getTimeStamp()));
+        return chatHistory;
     }
 
     public List<MessageDTO> getChat(String username1, String username2) {

@@ -103,6 +103,11 @@ Vue.component('userFeedPosts',
                         "postId": this.postToDelete.id
                     }
                 }).then(() => {
+                        if (this.loggedUser.role === "ADMIN")
+                        {
+                            let message = '{sender:"' + this.loggedUser.username + '",receiver:"' + this.postToDelete.ownerUsername + '",messageContent:"Your post with text ' + this.postToDelete.text +' has been removed",timeStamp:"gg"}'
+                            this.$root.$emit('adminMessage',message);
+                        }
                         this.postToDelete.deleted = true
                         $('#modal-close').click();
                         }).catch(function error(err) {console.log("error")});

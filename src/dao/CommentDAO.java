@@ -47,10 +47,9 @@ public class CommentDAO {
         String text = row[3];
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(row[4],formatter);
-        LocalDateTime dateEdited = LocalDateTime.parse(row[5],formatter);
-        Boolean deleted = Boolean.valueOf(row[6]);
+        Boolean deleted = Boolean.valueOf(row[5]);
         User user = this.userDAO.getUserByUsername(row[2]);
-        Comment comment = new Comment(id,user,Integer.valueOf(row[1]),text,dateTime, dateEdited, deleted);
+        Comment comment = new Comment(id,user,Integer.valueOf(row[1]),text,dateTime, deleted);
         if (!deleted) post.getComments().add(comment);
         return comment;
     }
@@ -58,7 +57,7 @@ public class CommentDAO {
     public void serialize(){
         try {
             StringBuilder inputBuffer = new StringBuilder();
-            inputBuffer.append("id,postId,userId,text,date,dateChanged,deleted\n");
+            inputBuffer.append("id,postId,userId,text,date,deleted\n");
             for(Comment comment : this.comments) {
                 inputBuffer.append(comment.toRow());
                 inputBuffer.append("\n");
@@ -74,7 +73,7 @@ public class CommentDAO {
     public void createComment(String username, Integer postId, String commentText) {
         Post post = postDAO.getPostById(Integer.valueOf(postId));
         User user = this.userDAO.getUserByUsername(username);
-        Comment newComment = new Comment(this.comments.get(this.comments.size()-1).getId() + 1, user, postId, commentText, LocalDateTime.now().withSecond(0).withNano(0), LocalDateTime.now().withSecond(0).withNano(0), false);
+        Comment newComment = new Comment(this.comments.get(this.comments.size()-1).getId() + 1, user, postId, commentText, LocalDateTime.now().withSecond(0).withNano(0), false);
         this.comments.add(newComment);
         post.getComments().add(newComment);
         serialize();
