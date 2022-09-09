@@ -66,7 +66,7 @@ public class Authentication {
                }
                else {
                    res.status(403);
-                   res.body("Wrong username or password");
+                   res.body("Wrong username or password.");
                    return res.body();
                }
             });

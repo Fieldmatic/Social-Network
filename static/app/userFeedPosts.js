@@ -30,7 +30,7 @@ Vue.component('userFeedPosts',
                             </div>
                           </div>
                         </div>
-                        <div class="card-header">
+                        <div class="card-header" @click="$router.push('/' + post.ownerUsername + '/posts')">
                              <div class="d-flex align-items-center">
                                         <img class="img-fluid rounded-circle" v-bind:src="'user/picture?path=' + post.ownerProfilePicture" height="40" width="40"/>
                                         <h5 class="ms-1 mt-2" style="color: #282828">{{post.ownerName}} {{post.ownerSurname}}</h5>

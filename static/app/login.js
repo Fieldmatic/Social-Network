@@ -10,6 +10,12 @@ var login = new Vue({
         login : function() {
             if (this.registered) {
                 const that = this;
+                console.log(this.user.username)
+                if (this.user.username === "" || this.user.password === "") {
+                    that.showToast("Username and password fields are required.");
+                    return;
+                }
+
                 axios.post("/authentication/login", this.user)
                     .then(() => {
                             window.location.href = "/homePage.html";
@@ -19,6 +25,15 @@ var login = new Vue({
                 });
             } else {
                 //birthDate-undefined
+                if (this.user.username === "" || this.user.password === "" || !this.user.passwordConfirm || !this.user.name || !this.user.surname || !this.user.email) {
+                    this.showToast("All fields are required.");
+                    return;
+                }
+                if (this.user.birthDate === undefined) {
+                    this.showToast("You must enter your date of birth.");
+                    return;
+                }
+
                 if (this.user.password !== this.user.passwordConfirm) {
                     this.showToast('Passwords are not equal.');
                     return;

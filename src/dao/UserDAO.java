@@ -83,6 +83,7 @@ public class UserDAO {
         user.setProfilePicture(dto.getProfilePicture());
         user.setGender(Gender.valueOf(dto.getGender()));
         user.setPrivateAccount(dto.getPrivateAccount());
+        user.setFriends(new ArrayList<>());
         user.setBlocked(false);
         return user;
 

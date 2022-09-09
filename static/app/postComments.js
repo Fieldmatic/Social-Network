@@ -15,6 +15,7 @@ Vue.component('postComments',
                             <button class="btn fw-bold ms-auto" style="color: #3F729B; width: fit-content; border-radius: 20px" v-on:click="publishComment()" :disabled="comment.length === 0">Publish</button>
                         </div>                        
                     </div>
+                    <div v-if="postComments">
                     <div class="d-flex" v-for="(postComment, index) in postComments.slice().reverse()">
                         <div v-if="!postComment.deleted" class="d-flex flex-fill mt-3">
                             <img class="img rounded-circle ms-2" v-bind:src="'user/picture?path=' + postComment.user.profilePicture" height="30" width="30"/>
@@ -24,6 +25,7 @@ Vue.component('postComments',
                             </div>     
                                 <button v-if="postComment.user.username===loggedUser.username" v-on:click="deleteComment(postComment.id)" class="btn d-flex justify-content-end fw-bold text-black-50 align-items-baseline" style="width: fit-content; height: 5vh"> <img class="rounded-circle me-2 mb-1" src="images/redTrash2.png" width="25" height="24"/></button>
                         </div>
+                    </div>
                     </div>
                     </div>
                 </div>
