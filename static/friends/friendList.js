@@ -11,7 +11,7 @@ Vue.component('friendList',{
                 <h4> No friends to show yet.</h4>
              </div>
              <div v-for="user in friends">
-                    <div class="w-100 d-inline-flex align-items-center border-bottom mt-3" @click="$router.push('/' + user.username + '/posts')" style="cursor: pointer;">
+                    <div class="w-100 d-inline-flex align-items-center border-bottom mt-3" @click="redirect(user)" style="cursor: pointer;">
                         <div class="row w-100 mx-auto align-items-center">
                             
                             <div class="col-md-2">
@@ -38,5 +38,11 @@ Vue.component('friendList',{
         if ((this.$route.matched.some(route => route.path.includes('/mutualFriends'))) && (username)) axios.get("/user/mutualFriends",{params:{'username':username}}).then((response) => {this.friends = response.data;for(let user of this.friends) {user.birthDate = new Date(user.birthDate['year'],user.birthDate['month']-1,user.birthDate['day'])}})
         else if (username) axios.get("/user/friends",{params:{'username':username}}).then((response) => {this.friends = response.data;for(let user of this.friends) {user.birthDate = new Date(user.birthDate['year'],user.birthDate['month']-1,user.birthDate['day'])}})
         else axios.get("/user/loggedUserFriends").then((response) => {this.friends = response.data;for(let user of this.friends) {user.birthDate = new Date(user.birthDate['year'],user.birthDate['month']-1,user.birthDate['day'])}})
+    },
+    methods:{
+        redirect(user){
+            this.$router.push('/' + user.username + '/posts');
+            location.reload();
+        }
     }
 })

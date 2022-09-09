@@ -2,7 +2,8 @@ var login = new Vue({
     el: '#login',
     data: {
         user : {
-            gender : 'FEMALE'
+            gender : 'FEMALE',
+            privateAccount: false
         },
         registered : true
     },
@@ -59,7 +60,7 @@ var login = new Vue({
                     surname : this.user.surname,
                     birthDate : this.user.birthDate.replace(/-/g, '.'),
                     gender : this.user.gender,
-                    privateAccount : true
+                    privateAccount : this.user.privateAccount
                 }
                 const that = this;
                 axios.post("/authentication/register", JSON.stringify(userRegister))

@@ -5,6 +5,7 @@ const Registration = {template: '<registration></registration>'}
 const Post = {template:'<post></post>'}
 const Search = {template :'<search></search>'}
 const FriendList = {template:'<friendList></friendList>'}
+const MutualFriends = {template:'<friendList></friendList>'}
 const FriendRequests = {template:'<friendRequests></friendRequests>'}
 const MainProfile = {template:'<mainProfile></mainProfile>'}
 const UserProfile = {template:'<userProfile></userProfile>'}
@@ -28,7 +29,7 @@ const router = new VueRouter({
         {path :"/:username", component: UserProfile,
             children: [
                 {path : 'posts', component : Post},
-                {path : 'mutualFriends', component : FriendList},
+                {path : 'mutualFriends', component : MutualFriends},
                 {path : 'friends', component : FriendList}
             ]},
 

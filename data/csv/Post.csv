@@ -1,6 +1,9 @@
 id,userId,picture,text,likes,deleted
-1,m,,Odlican post,m,false
-2,i,,Odlican post,,false
-3,k,./data/images/k/trash.png,novi moj post,,false
-4,k,,moj novi post,,false
-5,m,./data/images/m/qck.png,,m,false
+1,m,./data/images/m/qck.png,Jedna sa zlatibora. Bilo nam je bas lepo ali je kratko trajalo. Bili smo samo tri dana.,m,true
+2,gociz,./data/images/gociz/girls-night-1648051248.png,Malo smo izasli u grad da jedemo i kasnije na pice sa drustvom. Super nam je bilo...,,false
+3,gociz,,Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent egestas ex vitae ultrices placerat. Sed quis ante ac mauris porttitor vulputate in in risus. Aenean suscipit eleifend ligula-m,false
+4,gociz,./data/images/gociz/Zugpsitze_mountain.jpg,Praesent nec nisi sed ipsum aliquet tincidunt. Sed tempus urna nulla, id convallis felis congue eget. Ut purus nibh,false
+5,gociz,,Nikad nije kasno,m,false
+6,bobs,./data/images/bobs/10-common-baby-questions.jpg,,,false
+7,bobs,,Od 09. do 11. septembra raj za sve burgere se jos jednom spusta na Sava Promenadu jer tada pocinje Burgeraj – festival burgera koji ce se po drugi put odrzati u jezgru festivalskih zbivanja kraj Save.,,false
+8,ivana,,Ovo je javni profil pa je zato vidljiv svima,m-ivana,false

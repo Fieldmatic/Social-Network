@@ -13,7 +13,7 @@ Vue.component('userProfile',{
         `
         <div class="d-flex flex-column">
             <div class="w-75 align-items-center border-bottom mt-3 mx-auto">
-                        <div v-if="user!==null" class="row container-fluid align-items-center mb-2">
+                        <div v-if="user!==null" :key="user.username" class="row container-fluid align-items-center mb-2">
                             <div class="col-md-2">
                                 <img id = "profilePic" class="img-fluid rounded-circle my-2 float-end" v-bind:src="'user/picture?path=' + user.profilePicture" height="168" width="168" alt="profilePicture"/>
                             </div>       
