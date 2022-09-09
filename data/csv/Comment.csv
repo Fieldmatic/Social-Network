@@ -1,4 +1,11 @@
 id,postId,userId,text,date,deleted
-1,1,m,Odlican komentar,2022-08-23T21:38,true
-2,2,m,alo,2022-08-31T16:02,false
-3,2,m,upisi se,2022-08-31T16:02,false
+1,8,gociz,Ovo je komentar na javni profil,2021-07-23T07:30,false
+2,8,m,Ovo je drugi komentar na javni profil,2022-09-09T22:26,true
+3,8,m,Jos jedan komentar na javni profil,2022-09-09T22:26,false
+4,4,m,Bas je vrh,2022-09-09T22:29,false
+5,4,m,Lepa je priroda,2022-09-09T22:29,true
+6,4,m,Sve top,2022-09-09T22:29,true
+7,4,m,top top,2022-09-09T22:29,false
+8,4,m,ttooop,2022-09-09T22:29,false
+9,4,m,ewddedewdwedwed,2022-09-09T23:04,false
+10,4,m,dewddewjnhbgfvdcvbghnyjhbgfvdcfvbghgfvdcfv,2022-09-09T23:04,false

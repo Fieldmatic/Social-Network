@@ -4,7 +4,8 @@ Vue.component('post',
           return {
               text:"",
               file:"",
-              showSearch : true
+              showSearch : true,
+              userFeedKey : 0
           }
         },
         template: `
@@ -32,7 +33,7 @@ Vue.component('post',
                         </div>
                     </div>           
                 </div> 
-                 <userFeedPosts></userFeedPosts>
+                 <userFeedPosts :key="userFeedKey"></userFeedPosts>
             </div>       
         `,
         computed:{
@@ -69,12 +70,13 @@ Vue.component('post',
                     {
                         newPost.picture = fileReader.result
                         newPost.pictureName = this.file.name
-                        axios.post("/post/add", JSON.stringify(newPost)).then((response) => {this.text = ""; this.file = ""; document.getElementById("picture").src = "";}
+                        axios.post("/post/add", JSON.stringify(newPost)).then((response) => {this.text = ""; this.file = ""; document.getElementById("picture").src = "";this.userFeedKey += 1;}
 
                         )
                     }
                 }
-                else axios.post("/post/add", JSON.stringify(newPost)).then((response) => { this.text = ""})}
+                else axios.post("/post/add", JSON.stringify(newPost)).then((response) => { this.text = ""; this.userFeedKey += 1;})
+            }
             }
     },
 )

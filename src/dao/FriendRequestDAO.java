@@ -61,6 +61,8 @@ public class FriendRequestDAO {
             if ((request.getSender().equals(sender)) && (request.getReceiver().equals(receiver)) && (request.getStatus().equals(FriendRequestStatus.WAIT)))
             {
                 request.setStatus(FriendRequestStatus.ACCEPTED);
+                userDAO.getUserByUsername(sender).getFriends().add(receiver);
+                userDAO.getUserByUsername(receiver).getFriends().add(sender);
                 serialize();
                 return true;
             }
@@ -87,6 +89,8 @@ public class FriendRequestDAO {
                     || ((request.getSender().equals(friendUsername)) && (request.getReceiver().equals(username)) && (request.getStatus().equals(FriendRequestStatus.ACCEPTED))))
             {
                 friendRequests.remove(request);
+                userDAO.getUserByUsername(username).getFriends().remove(friendUsername);
+                userDAO.getUserByUsername(friendUsername).getFriends().remove(username);
                 serialize();
                 return true;
             }

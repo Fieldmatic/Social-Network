@@ -7,6 +7,7 @@ Vue.component('userFeedPosts',
                 loggedUser : {},
                 postForModal : {},
                 postToDelete : {},
+                deletionReason:""
             }
         }, template : `
                 <div class="d-flex flex-column mt-4">
@@ -21,7 +22,7 @@ Vue.component('userFeedPosts',
                                 <button type="button" class="btn-close" id="modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
                               <div class="modal-body">
-                                Are you sure you want to delete the post?
+                                 <textarea class="form-control" type="text" v-model="deletionReason" placeholder="Enter deletion reason"></textarea>
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -30,7 +31,7 @@ Vue.component('userFeedPosts',
                             </div>
                           </div>
                         </div>
-                        <div class="card-header" @click="$router.push('/' + post.ownerUsername + '/posts')">
+                        <div class="card-header" @click="$router.push('/' + post.ownerUsername + '/posts')" style="cursor:pointer;">
                              <div class="d-flex align-items-center">
                                         <img class="img-fluid rounded-circle" v-bind:src="'user/picture?path=' + post.ownerProfilePicture" height="40" width="40"/>
                                         <h5 class="ms-1 mt-2" style="color: #282828">{{post.ownerName}} {{post.ownerSurname}}</h5>
@@ -73,7 +74,10 @@ Vue.component('userFeedPosts',
                     .catch(function error(err) {console.log("error")});
             },
             refreshFeed : function() {
-                if ((this.$route.matched.some(route => route.path.includes('profile/posts')))) axios.get("/post/getUserPosts").then(response =>
+                if ((this.$route.matched.some(route => route.path.includes('profile/posts')))) axios.get("/post/getUserPosts",
+                    {
+                        params : {"username": this.loggedUser.username}
+                    }).then(response =>
                 {
                     this.posts = response.data;
                     if ($('#detailedViewModal').is(':visible')) {
@@ -105,7 +109,7 @@ Vue.component('userFeedPosts',
                 }).then(() => {
                         if (this.loggedUser.role === "ADMIN")
                         {
-                            let message = '{sender:"' + this.loggedUser.username + '",receiver:"' + this.postToDelete.ownerUsername + '",messageContent:"Your post with text ' + this.postToDelete.text +' has been removed",timeStamp:"gg"}'
+                            let message = '{sender:"' + this.loggedUser.username + '",receiver:"' + this.postToDelete.ownerUsername + '",messageContent:"Admin deleted your post. Deletion reason: ' + this.deletionReason +'",timeStamp:"gg"}'
                             this.$root.$emit('adminMessage',message);
                         }
                         this.postToDelete.deleted = true
@@ -124,22 +128,25 @@ Vue.component('userFeedPosts',
                 }
                 document.getElementById('detailedViewModalDialog').classList.remove('modal-xl');
                 document.getElementById('modalInfoColumn').classList.remove('col-6');
+                document.getElementById('modalInfoColumn').classList.remove('col-5');
+
 
                 if (post.picture) {
                     document.getElementById('detailedViewModalDialog').classList.add('modal-xl');
 
                     const pictureDiv = document.createElement("div");
                     const pictureTag = document.createElement("img");
-                    pictureDiv.classList.add('col-6');
+                    pictureDiv.classList.add('col-7');
                     pictureTag.src = 'user/picture?path=' + post.picture;
-                    pictureTag.width = 800;
-                    pictureTag.height = 800;
-                    pictureTag.classList.add('img-fluid');
+                    pictureTag.width = 1000;
+                    pictureTag.height = 530;
+                    pictureTag.classList.add('img-responsive');
+                    pictureTag.classList.add('w-100');
                     pictureDiv.appendChild(pictureTag);
 
                     row.insertBefore(pictureDiv, row.children[0]);
 
-                    document.getElementById('modalInfoColumn').classList.add('col-6');
+                    document.getElementById('modalInfoColumn').classList.add('col-5');
                 } else {
                     document.getElementById('detailedViewModalDialog').classList.add('modal-lg');
                     document.getElementById('modalInfoColumn').classList.add('col');
