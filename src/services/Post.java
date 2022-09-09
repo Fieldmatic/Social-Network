@@ -2,6 +2,7 @@ package services;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
 import dao.Repository;
 import dto.NewPostDTO;
 import enums.Role;
@@ -77,15 +78,15 @@ public class Post {
             });
 
             get("/getUserPosts", (req, res) -> {
+                String username = req.queryParams("username");
+                User user = this.repo.getUserDAO().getUserByUsername(username);
                 res.type("application/json");
-                Session ss = req.session(true);
-                User user = ss.attribute("user");
                 if (user != null) {
                     return gson.toJson(this.repo.getPostDAO().getUserPosts(user));
                 }
                 else {
                     res.status(401);
-                    res.body("User is not logged in !");
+                    res.body("Username" + username + " is not valid!");
                     return res.body();
                 }
             });

@@ -3,12 +3,13 @@ Vue.component('post',
         data: function() {
           return {
               text:"",
-              file:""
+              file:"",
+              showSearch : true
           }
         },
         template: `
             <div class="mx-auto" id="posts">
-                <div class="mx-auto mt-2 "  style="border-color:lightgray; border-style:solid; border-radius: 15px;border-width: 1px;"">        
+                <div v-if="showSearch" class="mx-auto mt-2 "  style="border-color:lightgray; border-style:solid; border-radius: 15px;border-width: 1px;"">        
                     <div class="row w-100 mx-auto pt-4">
                         <div class="col-12"> 
                             <input id="text" v-model="text" class="form-control form-rounded" placeholder="What's up?"/>
@@ -19,7 +20,7 @@ Vue.component('post',
                     </div>          
                     <div class="row w-100 mx-auto pt-4 d-flex align-items-center mb-2">
                         <div class="col-7 d-inline-flex"> 
-                            <div class="mx-auto me-auto">
+                            <div class="me-auto">
                                 <div class="image-upload" >
                                  <input type="file" id="fileUpload" style="font-size:0.9em" v-on:change="showPicture();" accept="image/png, image/gif, image/jpeg" />
                                 </div>
@@ -39,6 +40,10 @@ Vue.component('post',
                 if ((this.text.length > 0) || (this.file)) return true;
             }
         },
+        mounted() {
+            if (this.$route.matched.some(route => route.path.includes('/posts')) && !this.$route.matched.some(route => route.path.includes('profile/'))) this.showSearch = false;
+        }
+        ,
         methods:{
             showPicture:function () {
                 let picture = document.querySelector('#picture');
@@ -71,6 +76,5 @@ Vue.component('post',
                 }
                 else axios.post("/post/add", JSON.stringify(newPost)).then((response) => { this.text = ""})}
             }
-
-    }
+    },
 )

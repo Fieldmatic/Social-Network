@@ -148,10 +148,17 @@ Vue.component('userFeedPosts',
             }
         },
         mounted () {
-            if ((this.$route.matched.some(route => route.path.includes('profile/posts')))) axios.get("/post/getUserPosts").then(response => {this.posts = response.data;})
+            axios.get('user/loggedUser').then(response => (this.loggedUser = response.data)).then (() => {
+            if ((this.$route.matched.some(route => route.path.includes('profile/posts')))) axios.get("/post/getUserPosts",
+                {
+                    params : {"username": this.loggedUser.username}
+                }).then(response => {this.posts = response.data;})
+            else if((this.$route.matched.some(route => route.path.includes('/posts')))) axios.get("/post/getUserPosts",
+            {
+                params : {"username": this.$route.params.username}
+            }).then(response => {this.posts = response.data; document.getElementById("posts").style.width = "100%";})
             else axios.get('post/getUserFeedPosts').then(response => {this.posts = response.data; document.getElementById("posts").style.width = "40%";})
-
-            axios.get('user/loggedUser').then(response => (this.loggedUser = response.data))
+        })
         }
     }
 )

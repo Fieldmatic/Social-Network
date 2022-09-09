@@ -6,10 +6,7 @@ import model.Post;
 import model.User;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.PatternSyntaxException;
 
 public class PostDAO {
@@ -114,6 +111,7 @@ public class PostDAO {
                 }
             }
         }
+        Collections.reverse(postsForUserFeed);
         return postsForUserFeed;
     }
 
@@ -124,6 +122,7 @@ public class PostDAO {
                     userPosts.add(post);
             }
         }
+        Collections.reverse(userPosts);
         return userPosts;
     }
 
