@@ -5,7 +5,7 @@ Vue.component('navbar', {
                 <a class="navbar-brand me-5 fw-bold" href="#/">Socialize</a>
                 <div class="ms-auto w-100 collapse navbar-collapse d-inline-flex" id="navbarText">
                   <ul class="navbar-nav w-100 me-auto mb-2 mb-lg-0 d-inline-flex">
-                    <div class="w-50 d-inline-flex">
+                    <div class="w-75 d-inline-flex">
                          <li class="nav-item">
                            <a class="nav-link active" aria-current="page" href="#/">Home</a>
                          </li>
@@ -25,7 +25,7 @@ Vue.component('navbar', {
                            <a class="nav-link" href="#/messages">Messages</a>
                          </li>
                     </div>
-                    <div class="w-50 me-2">
+                    <div class="w-25 me-2">
                         <li class="nav-item float-end">
                             <a class="nav-link" href="/" v-on:click="logout()">Logout</a>
                         </li>

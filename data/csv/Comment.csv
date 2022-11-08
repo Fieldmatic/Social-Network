@@ -1,7 +1,7 @@
 id,postId,userId,text,date,deleted
-1,8,gociz,Ovo je komentar na javni profil,2021-07-23T07:30,false
+1,8,gociz,Ovo je komentar na javni profil,2021-07-23T07:30,true
 2,8,m,Ovo je drugi komentar na javni profil,2022-09-09T22:26,true
-3,8,m,Jos jedan komentar na javni profil,2022-09-09T22:26,false
+3,8,m,Jos jedan komentar na javni profil,2022-09-09T22:26,true
 4,4,m,Bas je vrh,2022-09-09T22:29,false
 5,4,m,Lepa je priroda,2022-09-09T22:29,true
 6,4,m,Sve top,2022-09-09T22:29,true
@@ -9,3 +9,5 @@ id,postId,userId,text,date,deleted
 8,4,m,ttooop,2022-09-09T22:29,false
 9,4,m,ewddedewdwedwed,2022-09-09T23:04,false
 10,4,m,dewddewjnhbgfvdcvbghnyjhbgfvdcfvbghgfvdcfv,2022-09-09T23:04,false
+11,7,gociz,Odlicno,2022-09-09T23:39,false
+12,4,mico111,Komentar,2022-09-10T10:40,true

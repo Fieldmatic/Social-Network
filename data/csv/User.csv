@@ -1,7 +1,8 @@
 username,password,email,name,surname,birthDate,gender,role,profilePicture,privateAccount,blocked
-m,m,milicftn@gmail.com,Mico,Milic,2000-04-11,MALE,USER,./data/images/m/prof.jpeg,true,false
+m,m,milicftn@gmail.com,M,M,2000-04-11,FEMALE,USER,./data/images/m/prof.jpeg,false,false
 admin,admin,admin@gmail.com,Admin,Admin,1900-01-01,MALE,ADMIN,./data/images/m/prof.jpeg,false,false
 gociz,gociz,goca@gmail.com,Goca,Milic,2003-07-23,FEMALE,USER,./data/images/gociz/attract-and-retain-women-leaders-Center-for-Creative-Leadership.jpg,true,false
-bobs,bobs,boba@gmail.com,Boba,Savic,1997-10-20,FEMALE,USER,./static/images/default-profile.jpg,true,false
+bobs,bobs,boba@gmail.com,Boba,Savic,1997-10-20,FEMALE,USER,./static/images/default-profile.jpg,true,true
 ivana,ivana,istevanovic3112@gmail.com,Ivana,Stevanovic,1998-07-23,FEMALE,USER,./static/images/default-profile.jpg,false,false
 o,o,ooo@gmail.com,o,o,2022-09-30,MALE,USER,./static/images/default-profile.jpg,false,false
+mico111,mico111,mico@gmail.com,Mico,Milic,2022-09-16,MALE,USER,./static/images/default-profile.jpg,false,false

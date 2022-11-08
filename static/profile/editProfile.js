@@ -12,7 +12,7 @@ Vue.component('editProfile',{
         },
     template:`
                    
-                    <form id="editProfileForm" class="w-50 mx-auto min-vh-120 mb-5">
+                    <form id="editProfileForm" class="w-75 mx-auto min-vh-120 mb-5">
                         <div class="position-absolute mt-2 start-50 translate-middle-x p-3" style="z-index: 11">
                             <div id="liveToast" class="toast hide align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true"></div>
                         </div>

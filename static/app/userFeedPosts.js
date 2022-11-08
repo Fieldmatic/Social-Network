@@ -22,7 +22,7 @@ Vue.component('userFeedPosts',
                                 <button type="button" class="btn-close" id="modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
                               <div class="modal-body">
-                                 <textarea class="form-control" type="text" v-model="deletionReason" placeholder="Enter deletion reason"></textarea>
+                                 <span>Jeste li sigurni da zelite da obrisete?</span>
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -31,7 +31,7 @@ Vue.component('userFeedPosts',
                             </div>
                           </div>
                         </div>
-                        <div class="card-header" @click="$router.push('/' + post.ownerUsername + '/posts')" style="cursor:pointer;">
+                        <div class="card-header" style="cursor:pointer;">
                              <div class="d-flex align-items-center">
                                         <img class="img-fluid rounded-circle" v-bind:src="'user/picture?path=' + post.ownerProfilePicture" height="40" width="40"/>
                                         <h5 class="ms-1 mt-2" style="color: #282828">{{post.ownerName}} {{post.ownerSurname}}</h5>
